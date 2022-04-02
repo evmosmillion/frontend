@@ -2,20 +2,123 @@ export default `[
 	{
 		"inputs": [
 			{
+				"internalType": "address",
+				"name": "_contractOwner",
+				"type": "address"
+			},
+			{
+				"internalType": "address payable",
+				"name": "_withdrawWallet",
+				"type": "address"
+			}
+		],
+		"stateMutability": "nonpayable",
+		"type": "constructor"
+	},
+	{
+		"anonymous": false,
+		"inputs": [
+			{
+				"indexed": true,
 				"internalType": "uint256",
-				"name": "spotIndex",
+				"name": "id",
 				"type": "uint256"
 			},
 			{
+				"indexed": false,
+				"internalType": "address",
+				"name": "owner",
+				"type": "address"
+			},
+			{
+				"indexed": false,
 				"internalType": "uint256",
-				"name": "newBid",
+				"name": "x",
+				"type": "uint256"
+			},
+			{
+				"indexed": false,
+				"internalType": "uint256",
+				"name": "y",
+				"type": "uint256"
+			},
+			{
+				"indexed": false,
+				"internalType": "uint256",
+				"name": "width",
+				"type": "uint256"
+			},
+			{
+				"indexed": false,
+				"internalType": "uint256",
+				"name": "height",
 				"type": "uint256"
 			}
 		],
-		"name": "bumpUp",
-		"outputs": [],
-		"stateMutability": "payable",
-		"type": "function"
+		"name": "BillboardBuy",
+		"type": "event"
+	},
+	{
+		"anonymous": false,
+		"inputs": [
+			{
+				"indexed": true,
+				"internalType": "uint256",
+				"name": "id",
+				"type": "uint256"
+			},
+			{
+				"indexed": false,
+				"internalType": "string",
+				"name": "title",
+				"type": "string"
+			},
+			{
+				"indexed": false,
+				"internalType": "string",
+				"name": "image",
+				"type": "string"
+			},
+			{
+				"indexed": false,
+				"internalType": "string",
+				"name": "link",
+				"type": "string"
+			},
+			{
+				"indexed": false,
+				"internalType": "bool",
+				"name": "nsfw",
+				"type": "bool"
+			}
+		],
+		"name": "BillboardChange",
+		"type": "event"
+	},
+	{
+		"anonymous": false,
+		"inputs": [
+			{
+				"indexed": true,
+				"internalType": "uint256",
+				"name": "id",
+				"type": "uint256"
+			},
+			{
+				"indexed": false,
+				"internalType": "address",
+				"name": "from",
+				"type": "address"
+			},
+			{
+				"indexed": false,
+				"internalType": "address",
+				"name": "to",
+				"type": "address"
+			}
+		],
+		"name": "BillboardOwnerChange",
+		"type": "event"
 	},
 	{
 		"inputs": [
@@ -40,16 +143,26 @@ export default `[
 				"type": "uint8"
 			},
 			{
-				"internalType": "uint256",
-				"name": "bid",
-				"type": "uint256"
+				"internalType": "string",
+				"name": "_title",
+				"type": "string"
+			},
+			{
+				"internalType": "string",
+				"name": "_image",
+				"type": "string"
+			},
+			{
+				"internalType": "string",
+				"name": "_link",
+				"type": "string"
 			}
 		],
 		"name": "buySpot",
 		"outputs": [
 			{
 				"internalType": "uint256",
-				"name": "spotIndex",
+				"name": "id",
 				"type": "uint256"
 			}
 		],
@@ -60,7 +173,7 @@ export default `[
 		"inputs": [
 			{
 				"internalType": "uint256",
-				"name": "spotIndex",
+				"name": "_id",
 				"type": "uint256"
 			},
 			{
@@ -69,7 +182,7 @@ export default `[
 				"type": "bool"
 			}
 		],
-		"name": "forceNsfw",
+		"name": "setNsfw",
 		"outputs": [],
 		"stateMutability": "nonpayable",
 		"type": "function"
@@ -77,37 +190,8 @@ export default `[
 	{
 		"inputs": [
 			{
-				"internalType": "address",
-				"name": "_contractOwner",
-				"type": "address"
-			},
-			{
-				"internalType": "address payable",
-				"name": "_withdrawWallet",
-				"type": "address"
-			}
-		],
-		"stateMutability": "nonpayable",
-		"type": "constructor"
-	},
-	{
-		"anonymous": false,
-		"inputs": [
-			{
-				"indexed": false,
 				"internalType": "uint256",
-				"name": "test",
-				"type": "uint256"
-			}
-		],
-		"name": "Info",
-		"type": "event"
-	},
-	{
-		"inputs": [
-			{
-				"internalType": "uint256",
-				"name": "spotIndex",
+				"name": "_id",
 				"type": "uint256"
 			},
 			{
@@ -116,7 +200,7 @@ export default `[
 				"type": "address"
 			}
 		],
-		"name": "setAdOwner",
+		"name": "setSpotOwner",
 		"outputs": [],
 		"stateMutability": "nonpayable",
 		"type": "function"
@@ -125,12 +209,12 @@ export default `[
 		"inputs": [
 			{
 				"internalType": "uint256",
-				"name": "spotIndex",
+				"name": "_id",
 				"type": "uint256"
 			},
 			{
 				"internalType": "string",
-				"name": "_link",
+				"name": "_title",
 				"type": "string"
 			},
 			{
@@ -140,13 +224,8 @@ export default `[
 			},
 			{
 				"internalType": "string",
-				"name": "_title",
+				"name": "_link",
 				"type": "string"
-			},
-			{
-				"internalType": "bool",
-				"name": "_nsfw",
-				"type": "bool"
 			}
 		],
 		"name": "updateSpot",
@@ -162,27 +241,8 @@ export default `[
 		"type": "function"
 	},
 	{
-		"inputs": [
-			{
-				"internalType": "uint256",
-				"name": "",
-				"type": "uint256"
-			}
-		],
-		"name": "activeSpots",
-		"outputs": [
-			{
-				"internalType": "uint64",
-				"name": "",
-				"type": "uint64"
-			}
-		],
-		"stateMutability": "view",
-		"type": "function"
-	},
-	{
 		"inputs": [],
-		"name": "activeSpotsLength",
+		"name": "getSpotsLength",
 		"outputs": [
 			{
 				"internalType": "uint256",
@@ -209,9 +269,9 @@ export default `[
 		"name": "grid",
 		"outputs": [
 			{
-				"internalType": "uint64",
+				"internalType": "bool",
 				"name": "",
-				"type": "uint64"
+				"type": "bool"
 			}
 		],
 		"stateMutability": "view",
@@ -220,19 +280,6 @@ export default `[
 	{
 		"inputs": [],
 		"name": "pixelsPerCell",
-		"outputs": [
-			{
-				"internalType": "uint256",
-				"name": "",
-				"type": "uint256"
-			}
-		],
-		"stateMutability": "view",
-		"type": "function"
-	},
-	{
-		"inputs": [],
-		"name": "priceSteps",
 		"outputs": [
 			{
 				"internalType": "uint256",
@@ -279,16 +326,6 @@ export default `[
 				"type": "uint8"
 			},
 			{
-				"internalType": "uint16",
-				"name": "coveredArea",
-				"type": "uint16"
-			},
-			{
-				"internalType": "uint256",
-				"name": "bid",
-				"type": "uint256"
-			},
-			{
 				"internalType": "string",
 				"name": "title",
 				"type": "string"
@@ -307,16 +344,6 @@ export default `[
 				"internalType": "bool",
 				"name": "nsfw",
 				"type": "bool"
-			},
-			{
-				"internalType": "bool",
-				"name": "forceNsfw",
-				"type": "bool"
-			},
-			{
-				"internalType": "uint16",
-				"name": "activeSpotsIndex",
-				"type": "uint16"
 			}
 		],
 		"stateMutability": "view",
@@ -324,7 +351,7 @@ export default `[
 	},
 	{
 		"inputs": [],
-		"name": "spotsLength",
+		"name": "weiPixelPrice",
 		"outputs": [
 			{
 				"internalType": "uint256",

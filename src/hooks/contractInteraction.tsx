@@ -3,7 +3,7 @@ import abi from "./abi";
 import { getGlobalState, setGlobalState } from "./globalState";
 import { addSpot, Spot, SpotPlace } from "./useGrid";
 
-const CONTRACT_ADDRESS = '0xa3ff96bb97cc4cf2e7ea608c663ec87ad773a245';
+const CONTRACT_ADDRESS = '0x10d762d4881cDaEb220E1191342769D1B3B12fC1';
 
 function getContract() {
     const connection = getGlobalState('connection');
@@ -19,42 +19,36 @@ async function num(value: any) {
 }
 
 const contractInteraction = {
-    buySpot: async (spot: SpotPlace, value: BigNumber) => {
-        const contract = getContract();
-        console.log('buy', value.toString());
-        const a = await contract.buySpot(spot.x, spot.y, spot.width, spot.height, spot.bid, {
-            value: ethers.utils.parseEther('0.00000001'),
-        });
-        console.log('a', a);
-    },
 
-    gatherSpots: async () => {
+    buySpot: async (spot: Spot, value: BigNumber) => {
+        console.log('buying', spot.x, spot.y, spot.width, spot.height, spot.title, spot.image, spot.link);
         const contract = getContract();
-        const activeSpotsLength = await num(contract.activeSpotsLength());
-        for (let i = 0; i < activeSpotsLength; i += 1) {
-            const spotIndex = await num(contract.activeSpots(i));
-            const spotWithoutIndex = await contract.spots(spotIndex);
-            const spot = { ...spotWithoutIndex, _index: spotIndex } as Spot;
-            addSpot(spot);
-            // setTimeout(() => {
-            //     spot.title = 'Hacker News';
-            //     spot.image = 'https://news.ycombinator.com/y18.gif';
-            //     spot.link = 'https://news.ycombinator.com/';
-            //     contractInteraction.updateSpot(spot);
-            // }, 1000);
-        }
+        await contract.buySpot(spot.x, spot.y, spot.width, spot.height, spot.title, spot.image, spot.link, { value });
     },
 
     updateSpot: async (spot: Spot) => {
         const contract = getContract();
-        console.log('spot', spot);
-        const result = await contract.updateSpot(spot._index, spot.link, spot.image, spot.title, /*spot.nsfw*/ false);
-        console.log('result', result);
-    }
+        console.log('UPDATE', spot);
+        await contract.updateSpot(spot._index, spot.title, spot.image, spot.link);
+    },
+
+    gatherSpots: async () => {
+        const contract = getContract();
+        const spotsLength = (await contract.getSpotsLength() as BigNumber).toNumber();
+        for (let i = 0; i < spotsLength; i += 1) {
+            const spotWithoutIndex = await contract.spots(i);
+            const spot = { ...spotWithoutIndex, _index: i } as Spot;
+            addSpot(spot);
+        }
+    },
 };
 
 setTimeout(() => {
-    // contractInteraction.gatherSpots();
+    const connection = getGlobalState('connection');
+    if (typeof window === 'undefined' || connection.status !== 'connected') {
+        return;
+    }
+    contractInteraction.gatherSpots();
 }, 1000);
 
 

@@ -6,8 +6,6 @@ export interface SpotPlace {
     y: number;
     width: number;
     height: number;
-    // coveredArea: number;
-    bid: ethers.BigNumber;
 }
 
 export interface Spot extends SpotPlace {
@@ -16,9 +14,7 @@ export interface Spot extends SpotPlace {
     image: string;
     link: string;
 
-    // nsfw: boolean;
-    // forceNsfw: boolean;
-    // activeSpotsIndex: number;
+    nsfw: boolean;
 
     // not provided by contract
     _index: number;
@@ -30,9 +26,7 @@ export function addSpot(spot: Spot) {
     for(let i = 0; i < spot.width; i += 1) {
         for(let k = 0; k < spot.height; k += 1) {
             const otherSpot = grid[spot.x+i][spot.y+k];
-            if (!otherSpot || otherSpot.bid < spot.bid) {
-                grid[spot.x+i][spot.y+k] = spot;
-            }
+            grid[spot.x+i][spot.y+k] = true;
         }
     }
     setGlobalState('info', { spots, grid });

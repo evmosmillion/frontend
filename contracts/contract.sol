@@ -3,9 +3,9 @@ pragma solidity >=0.4.16 <0.9.0;
 
 
 contract ThetaBillboard {
-
-    event ThetaBillboardBuy(
-        uint indexed idx,
+    
+    event BillboardBuy (
+        uint indexed id,
         address owner,
         uint x,
         uint y,
@@ -13,29 +13,27 @@ contract ThetaBillboard {
         uint height
     );
 
-    /// Publish is emitted whenever the contents of an ad is changed.
-    event ThetaBillboardPublish(
-        uint indexed idx,
-        string link,
-        string image,
+    event BillboardChange (
+        uint indexed id,
         string title,
-        bool NSFW
+        string image,
+        string link,
+        bool nsfw
     );
 
-    /// SetAdOwner is emitted whenever the ownership of an ad is transfered
-    event SetAdOwner(
-        uint indexed idx,
+    event BillboardOwnerChange (
+        uint indexed id,
         address from,
         address to
     );
 
-    uint public constant weiPixelPrice = 1; // 100000000000000000; // 0.1 Tfuel
+    uint public constant weiPixelPrice = 100000; // 100000000000000000; // 0.1 Tfuel
 
     uint public constant pixelsPerCell = 400; // 20x20
 
     bool[50][50] public grid; // grid of taken spots
 
-    // can withdraw the funds and override NSFW status of spots.
+    // can withdraw the funds and set NSFW status of spots.
     address contractOwner;
 
     address payable withdrawWallet;
@@ -50,11 +48,9 @@ contract ThetaBillboard {
         string image;
         string link;
 
-        bool nsfw;
-        bool forceNsfw;
+        bool nsfw; // I will set this if necessary
     }
 
-    // ads are stored in an array, the id of an ad is its index in this array.
     Spot[] public spots;
 
     function getSpotsLength() public view returns (uint) {
@@ -67,11 +63,9 @@ contract ThetaBillboard {
 
         contractOwner = _contractOwner;
         withdrawWallet = _withdrawWallet;
-        Spot memory spot = Spot(address(0), 0, 0, 0, 0, "Hi, there!", "", "https://google.com", false, false);
-        spots.push(spot);
     }
 
-    function buySpot(uint8 _x, uint8 _y, uint8 _width, uint8 _height, uint bid) public payable returns (uint spotIndex) {
+    function buySpot(uint8 _x, uint8 _y, uint8 _width, uint8 _height, string memory _title, string memory _image, string memory _link) public payable returns (uint id) {
         uint cost = _width * _height * pixelsPerCell * weiPixelPrice;
         require(cost > 0);
         require(msg.value >= cost);
@@ -86,43 +80,41 @@ contract ThetaBillboard {
             }
         }
 
-        Spot memory spot = Spot(msg.sender, _x, _y, _width, _height, "", "", "", false, false);
+        Spot memory spot = Spot(msg.sender, _x, _y, _width, _height, _title, _image, _link, false);
         spots.push(spot);
-        spotIndex = spots.length - 1;
+        id = spots.length - 1;
 
-        // TODO emit event
+        emit BillboardBuy(id, msg.sender, _x, _y, _width, _height);
 
-        return spotIndex;
+        return id;
     }
 
-    function updateSpot(uint spotIndex, string memory _link, string memory _image, string memory _title, bool _nsfw) public {
-        Spot storage spot = spots[spotIndex];
+    function updateSpot(uint _id, string memory _title, string memory _image, string memory _link) public {
+        Spot storage spot = spots[_id];
         require(msg.sender == spot.owner);
         spot.title = _title;
         spot.image = _image;
         spot.link = _link;
-        spot.nsfw = _nsfw;
 
-        // TODO emit event
-        // Publish(_idx, ad.link, ad.image, ad.title, ad.NSFW || ad.forceNSFW);
+        emit BillboardChange(_id, spot.title, spot.image, spot.link, spot.nsfw);
     }
 
-    function setAdOwner(uint spotIndex, address _newOwner) public {
-        Spot storage spot = spots[spotIndex];
+    function setSpotOwner(uint _id, address _newOwner) public {
+        Spot storage spot = spots[_id];
         require(msg.sender == spot.owner);
         spot.owner = _newOwner;
 
-        // SetAdOwner(_idx, msg.sender, _newOwner);
+        emit BillboardOwnerChange(_id, msg.sender, _newOwner);
     }
 
 
-    // forceNSFW allows the owner to override the NSFW status for a specific ad unit.
-    function forceNsfw(uint spotIndex, bool _nsfw) public {
+    // Set NSFW status for a specific spot.
+    function setNsfw(uint _id, bool _nsfw) public {
         require(msg.sender == contractOwner);
-        Spot storage spot = spots[spotIndex];
-        spot.forceNsfw = _nsfw;
+        Spot storage spot = spots[_id];
+        spot.nsfw = _nsfw;
 
-        // Publish(_idx, ad.link, ad.image, ad.title, ad.nsfw || ad.forceNsfw);
+        emit BillboardChange(_id, spot.title, spot.image, spot.link, spot.nsfw);
     }
 
     // withdraw allows the owner to transfer out the balance of the contract.

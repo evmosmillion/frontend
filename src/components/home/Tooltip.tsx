@@ -90,7 +90,7 @@ class Tooltip extends Component<Props> {
             onMouseEnter: (e) => this.mouseEnter(e),
             onMouseLeave: () => this.mouseLeave(),
             onMouseMove: (e) => this.mouseMove(e),
-        });
+        }, this.props.element === 'img' ? undefined : [this.props.children]);
     }
 }
 
