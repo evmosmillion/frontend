@@ -33,13 +33,14 @@ contract OneMio721 is ERC721 {
     event BillboardPublish (
         uint indexed id,
         address indexed owner,
-        uint x,
-        uint y,
-        uint width,
-        uint height,
+        uint8 x,
+        uint8 y,
+        uint8 width,
+        uint8 height,
         string title,
         string image,
-        string link
+        string link,
+        bool update
     );
 
     uint public constant weiPixelPrice = 100000; // 100000000000000000; // 0.1 Tfuel
@@ -86,13 +87,15 @@ contract OneMio721 is ERC721 {
         require(msg.value >= cost);
 
         // Loop over relevant grid entries
-        for(uint i = 0; i < width; i++) {
-            for(uint j = 0; j < height; j++) {
-                if (grid[x + i][y + j]) { // the spot is taken
+        for(uint i = 0; i < width; ) {
+            for(uint k = 0; k < height; ) {
+                if (grid[x + i][y + k]) { // the spot is taken
                     revert("The spot is already taken.");
                 }
-                grid[x + i][y + j] = true;
+                grid[x + i][y + k] = true;
+                unchecked{ k++; }
             }
+            unchecked{ i++; }
         }
 
         Spot memory spot = Spot(x, y, width, height, title, image, link, false);
@@ -113,7 +116,7 @@ contract OneMio721 is ERC721 {
         spot.image = image;
         spot.link = link;
 
-        emit BillboardPublish(tokenId, msg.sender, spot.x, spot.y, spot.width, spot.height, spot.title, spot.image, spot.link);
+        emit BillboardPublish(tokenId, msg.sender, spot.x, spot.y, spot.width, spot.height, spot.title, spot.image, spot.link, true);
     }
 
     // withdraw allows the owner to transfer out the balance of the contract.
