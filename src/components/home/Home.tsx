@@ -9,7 +9,7 @@ import LoadingIndicator from './LoadingIndicator';
 import contract from '../../hooks/contractInteraction';
 
 const SPACE_WIDTH = 20;
-const PRICE_STRING = '0.00001';
+const PRICE_STRING = '1';
 const PRICE_WEI = ethers.utils.parseEther(PRICE_STRING);
 
 function resizeStyle(top?: number, right?: number, bottom?: number, left?: number) {
@@ -21,10 +21,6 @@ function resizeStyle(top?: number, right?: number, bottom?: number, left?: numbe
         width: '8px',
         height: '8px',
     }
-}
-interface TooltipContentProps {
-    title: string;
-    bid: ethers.BigNumber;
 }
 
 export default function Home() {
@@ -71,11 +67,13 @@ export default function Home() {
     const totalPixels = dim.width * dim.height;
     const weiValue = PRICE_WEI.mul(totalPixels);
     const costText = ethers.utils.commify(ethers.utils.formatEther(weiValue));
+    let enoughFunds = false;
     
     let mySpots: Spot[] = [];
     if (connection.status === 'connected') {
         const myAddress = connection.address.toLowerCase();
         mySpots = spots.filter(s => s.owner.toLowerCase() === myAddress);
+        enoughFunds = connection.balanceBigNumber.gte(weiValue);
     }
 
     function selectSpot(idStr: string) {
@@ -125,7 +123,6 @@ export default function Home() {
     }
 
     const isEditing = (editIndex !== -1);
-    console.log('editIndex', isEditing, typeof editIndex, editIndex);
 
     return (
         <div className={styles.container}>
@@ -217,7 +214,10 @@ export default function Home() {
                     ? <><button onClick={() => contract.updateSpot(spot)}>Update</button><button onClick={() => selectSpot('-1')}>Cancel</button></>
                     : (isOverlapping
                         ? <div className={styles.belowTable}>You cannot buy this spot. <br />You are overlapping other spots!</div>
-                        : <button onClick={() => contract.buySpot(spot, weiValue)}>Buy</button>)
+                        : (enoughFunds
+                            ? <button onClick={() => contract.buySpot(spot, weiValue)}>Buy</button>
+                            : <div className={styles.belowTable}>You cannot buy this spot. <br />You don't have enough funds to buy this spot!</div>)
+                        )
                     }
                 </div>}
                 {buying && <Rnd

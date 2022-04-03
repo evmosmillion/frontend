@@ -1,6 +1,7 @@
 .container {
-    padding: 10px 0;
-    border: 1px solid #000;
+    margin: 0 auto;
+    width: 1020px;
+    padding: 10px 10px;
 }
 
 .grid {
@@ -92,6 +93,7 @@
     }
     button, .belowTable {
         margin: 10px 5px 0 5px;
+        font-weight: bold;
     }
 }
 .overlapping {
@@ -104,6 +106,7 @@
     display: flex;
     max-width: 1000px;
     margin: 0 auto;
+    height: 55px;
     justify-content: center;
     align-items: center;
 
@@ -121,7 +124,6 @@
     }
 }
 .connect {
-    height: 50px;
     text-align: center;
 }
 .connected {
