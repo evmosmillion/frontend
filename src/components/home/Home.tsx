@@ -184,6 +184,10 @@ export default function Home() {
                 }}>
                     <table>
                         <tbody>
+                            {spot._index !== -1 && <tr>
+                                <th>NFT tokenId:</th>
+                                <td>{spot._index}</td>
+                            </tr>}
                             <tr>
                                 <th>Size:</th>
                                 <td>{dim.width}x{dim.height}</td>
