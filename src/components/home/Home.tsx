@@ -7,8 +7,9 @@ import useGrid, { Spot, SpotPlace } from '../../hooks/useGrid';
 import useConnection from '../../hooks/useConnection';
 import LoadingIndicator from './LoadingIndicator';
 import contract from '../../hooks/contractInteraction';
+import Spots from './Spots';
 
-const SPACE_WIDTH = 20;
+export const SPACE_WIDTH = 20;
 const PRICE_STRING = '1';
 const PRICE_WEI = ethers.utils.parseEther(PRICE_STRING);
 
@@ -66,7 +67,7 @@ export default function Home() {
     }
     const totalPixels = dim.width * dim.height;
     const weiValue = PRICE_WEI.mul(totalPixels);
-    const costText = ethers.utils.commify(ethers.utils.formatEther(weiValue));
+    const costText = ethers.utils.commify(ethers.utils.formatEther(weiValue).slice(0, -2)); // slice removes the '.0' at the end
     let enoughFunds = false;
     
     let mySpots: Spot[] = [];
@@ -148,27 +149,13 @@ export default function Home() {
                 </div>
             </div>
             <div className={styles.grid}>
-                {spots.map((e, i) => <a
-                    key={i}
-                    href={editIndex === e._index ? linkUrl : e.link}
-                    target='_blank'
-                >
-                    <Tooltip
-                        content={editIndex === e._index ? title : e.title}
-                        element='img'
-                        props={{
-                            src: (editIndex === e._index ? imageUrl : e.image),
-                            className: `${styles.cell} ${editIndex === e._index ? styles.hl : ''}`,
-                            style: {
-                                left: `${e.x * SPACE_WIDTH}px`,
-                                top: `${e.y * SPACE_WIDTH}px`,
-                                width: `${e.width * SPACE_WIDTH}px`,
-                                height: `${e.height * SPACE_WIDTH}px`,
-                                backgroundColor: '#' + e.owner.slice(-6),
-                            },
-                        }} 
-                    />
-                </a>)}
+                <Spots
+                    spots={spots}
+                    editIndex={editIndex}
+                    editImageUrl={isEditing ? imageUrl : ''}
+                    editLinkUrl={isEditing ? linkUrl : ''}
+                    editTitle={isEditing ? title : ''}
+                />
 
                 {(buying || isEditing) && <div className={`${styles.info} ${!isInfoVisible ? styles.hidden : ''} ${isEditing ? styles.editing : ''}`} style={{
                     left: `${Math.min(dim.x, 600)}px`,
@@ -190,8 +177,8 @@ export default function Home() {
                                 <td>{totalPixels.toLocaleString('en')} Pixels</td>
                             </tr>
                             <tr>
-                                <th>Total cost:</th>
-                                <td>{costText} TFUEL (+ gas)</td>
+                                <th>Cost:</th>
+                                <td>{ isEditing ? 'You only pay for gas to update the content.' : `${costText} TFUEL (+ gas)`}</td>
                             </tr>
                             <tr className={styles.lineAbove}>
                                 <th>Title:</th>

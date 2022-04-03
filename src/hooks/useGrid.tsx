@@ -29,7 +29,7 @@ export function addSpot(spot: Spot) {
             grid[spot.x+i][spot.y+k] = true;
         }
     }
-    setGlobalState('info', { spots, grid });
+    setGlobalState('info', { spots: [...spots], grid });
 }
 
 export default function useGrid() {
