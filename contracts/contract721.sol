@@ -98,7 +98,7 @@ contract OneMio721 is ERC721 {
             unchecked{ i++; }
         }
 
-        Spot memory spot = Spot(x, y, width, height, title, image, link, false);
+        Spot memory spot = Spot(x, y, width, height, title, image, link);
         spots.push(spot);
         tokenId = spots.length - 1;
         
