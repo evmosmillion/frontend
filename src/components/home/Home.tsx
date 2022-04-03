@@ -35,6 +35,7 @@ export default function Home() {
     const [imageUrl, setImageUrl] = useState('');
     const [linkUrl, setLinkUrl] = useState('');
     const [editIndex, setEditIndex] = useState(-1);
+    const [isLoading, setIsLoading] = useState(false);
 
     const hideInfo = () => setIsInfoVisible(false);
     const dragStop = (x: number, y: number) => {
@@ -148,6 +149,20 @@ export default function Home() {
         </div>
     }
 
+    async function contractBuy() {
+        setIsLoading(true);
+        await contract.buySpot(spot, weiValue);
+        setIsLoading(false);
+        setBuying(false);
+    }
+
+    async function contractUpdate() {
+        setIsLoading(true);
+        await contract.updateSpot(spot);
+        setIsLoading(false);
+        selectSpot('-1')
+    }
+
     return (
         <div className={styles.container}>
             <Head>
@@ -226,11 +241,11 @@ export default function Home() {
                         </tbody>
                     </table>
                     {isEditing
-                    ? <><button onClick={() => contract.updateSpot(spot)}>Update</button><button onClick={() => selectSpot('-1')}>Cancel</button></>
+                    ? <><button onClick={contractUpdate}>Update</button><button onClick={() => selectSpot('-1')}>Cancel</button></>
                     : (isOverlapping
                         ? <div className={styles.belowTable}>You cannot buy this spot. <br />You are overlapping other spots!</div>
                         : (enoughFunds
-                            ? <button onClick={() => contract.buySpot(spot, weiValue)}>Buy</button>
+                            ? <button onClick={contractBuy}>Buy</button>
                             : <div className={styles.belowTable}>You cannot buy this spot. <br />You don't have enough funds to buy this spot!</div>)
                         )
                     }
@@ -284,6 +299,9 @@ export default function Home() {
                         />
                     </Tooltip>
                 </Rnd>}
+                {isLoading && <div className={styles.loading}>
+                    <LoadingIndicator width={600} height={300} />
+                </div>}
             </div>
             <FAQ />
         </div>

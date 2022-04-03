@@ -23,11 +23,14 @@ export function setSpotsCount(spotCount: number) {
     setGlobalState('info', { ...info, totalSpots: spotCount });
 }
 
-export function addSpot(spot: Spot) {
+export function updateSpot(spot: Spot) {
     let { spots, grid, receivedSpots, pixelsUsed, totalSpots } = getGlobalState('info');
     if (!spots[spot._index]) {
         receivedSpots += 1;
         pixelsUsed += (spot.height * spot.width) * (SPACE_WIDTH * SPACE_WIDTH);
+        if (receivedSpots > totalSpots) { // in case an update adds a spot later
+            totalSpots = receivedSpots;
+        }
     }
     spots[spot._index] = spot;
     for(let i = 0; i < spot.width; i += 1) {

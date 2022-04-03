@@ -55,7 +55,6 @@ contract OneMio721 is ERC721 {
     address payable withdrawWallet;
 
     struct Spot {
-        // address owner;
         uint8 x;
         uint8 y;
         uint8 width;
