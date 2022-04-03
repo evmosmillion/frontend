@@ -18,12 +18,15 @@ interface ConnectStateConnected { // waiting for user to confirm
 
 export type ConnectState = ConnectStateDisconnected | ConnectStateWaiting | ConnectStateConnected;
 
-async function getProvider() {
+async function getProvider(silent: boolean) {
     if (typeof window === 'undefined') { // Otherwise Next.js might try to use this function server-side
         throw new Error('window not defined!');
     }
     const ethereum = (window as any).ethereum;
     if (!ethereum) {
+        if (!silent) {
+            alert('You need the extension "MetaMask" to interact with this dApp.');
+        }
         throw new Error('MetaMask is not installed.');
     }
     
@@ -43,6 +46,9 @@ async function getProvider() {
 
     // TESTNET
     if (chainId !== '0x16d') {
+        if (!silent) {
+            alert('Your Metamask extension is connected to the wrong chain. Make sure you are connected to the Theta Mainnet.');
+        }
         throw new Error('Wrong chain connected.');
     }
 
@@ -59,7 +65,7 @@ async function getProvider() {
 
 (async () => {
     try {
-        const provider = await getProvider();
+        const provider = await getProvider(true);
         const accounts = await provider.send('eth_accounts', []) as string[]; // get accounts without requesting them via popup
         if (accounts.length !== 0) {
             const address = accounts[0].toLowerCase();
@@ -84,11 +90,12 @@ export default function useConnection() {
     async function connect() {
         try {
             setConnection({ status: 'waiting' });
-            const provider = await getProvider();
+            const provider = await getProvider(false);
 
             const accounts = await provider.send('eth_requestAccounts', []) as string[];
             if (accounts.length === 0) {
-                throw new Error('Unable to connect to account');
+                alert('Unable to connect to account. Make sure you are on the Theta Network and have an account.');
+                return;
             }
             const address = accounts[0].toLowerCase();
             const balance = await provider.getBalance(address);
