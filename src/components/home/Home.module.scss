@@ -37,17 +37,21 @@
     }
 }
 .info {
-    width: 300px;
+    width: 400px;
     position: absolute;
     border: 1px solid #000;
     background: #fff;
-    padding: 20px;
+    padding: 15px 20px;
     transition: opacity 0.2s;
     font-size: 11px;
     box-shadow: 2px 2px 2px 0 rgba(0, 0, 0, 0.25);
-    /*opacity: 0.2;*/
+    opacity: 0.2;
     z-index: 100000000000;
     text-align: center;
+
+    &.editing {
+        opacity: 1;
+    }
 
     &:hover {
         opacity: 1;

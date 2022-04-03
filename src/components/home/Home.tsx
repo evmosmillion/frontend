@@ -106,6 +106,9 @@ export default function Home() {
             width: 200,
             height: 200,
         });
+        setTitle('');
+        setImageUrl('');
+        setLinkUrl('');
         setEditIndex(-1);
         setBuying(true);
     }
@@ -120,6 +123,9 @@ export default function Home() {
     } else {
         connectionContent = <button onClick={buy}>Place a spot!</button>;
     }
+
+    const isEditing = (editIndex !== -1);
+    console.log('editIndex', isEditing, typeof editIndex, editIndex);
 
     return (
         <div className={styles.container}>
@@ -167,8 +173,8 @@ export default function Home() {
                     />
                 </a>)}
 
-                {(buying || editIndex !== -1) && <div className={`${styles.info} ${!isInfoVisible ? styles.hidden : ''}`} style={{
-                    left: `${Math.min(dim.x, 700)}px`,
+                {(buying || isEditing) && <div className={`${styles.info} ${!isInfoVisible ? styles.hidden : ''} ${isEditing ? styles.editing : ''}`} style={{
+                    left: `${Math.min(dim.x, 600)}px`,
                     top: dim.y < 500 ? `${dim.y + dim.height + 20}px` : undefined,
                     bottom: dim.y >= 500 ? `${1000 - dim.y + 20}px` : undefined,
                 }}>
@@ -203,15 +209,15 @@ export default function Home() {
                                 <td><input type="text" value={linkUrl} onChange={(ev) => setLinkUrl(ev.target.value)} /></td>
                             </tr>
                             <tr>
-                                <td colSpan={2}>You can change these values later.</td>
+                                <td colSpan={2}>You can change these values anytime for free (only gas costs).</td>
                             </tr>
                         </tbody>
                     </table>
-                    {editIndex === -1
-                    ? (isOverlapping
+                    {isEditing
+                    ? <><button onClick={() => contract.updateSpot(spot)}>Update</button><button onClick={() => selectSpot('-1')}>Cancel</button></>
+                    : (isOverlapping
                         ? <div className={styles.belowTable}>You cannot buy this spot. <br />You are overlapping other spots!</div>
                         : <button onClick={() => contract.buySpot(spot, weiValue)}>Buy</button>)
-                    : <><button onClick={() => contract.updateSpot(spot)}>Update</button><button onClick={() => selectSpot('-1')}>Cancel</button></>
                     }
                 </div>}
                 {buying && <Rnd
