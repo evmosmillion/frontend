@@ -14,9 +14,6 @@ export interface Spot extends SpotPlace {
     title: string;
     image: string;
     link: string;
-
-    nsfw: boolean;
-
     // not provided by contract
     _index: number;
 }

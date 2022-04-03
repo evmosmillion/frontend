@@ -5,22 +5,23 @@ import "@openzeppelin/contracts@4.5.0/token/ERC721/ERC721.sol";
 
 contract OneMio721 is ERC721 {
 
-    constructor(/*address contractOwner, address payable withdrawWallet*/) ERC721("MyToken", "TBB") {
-        // require(contractOwner != address(0));
-        // require(withdrawWallet != address(0));
+    constructor(address _contractOwner, address payable _withdrawWallet) ERC721("ThetaBillboard", "TBB") {
+        require(_contractOwner != address(0));
+        require(_withdrawWallet != address(0));
         
-        contractOwner = address(0x8e9c3513B5F86811477fc1e21826Cebb4DBaD25F); // contractOwner;
-        withdrawWallet = payable(0x8e9c3513B5F86811477fc1e21826Cebb4DBaD25F);
+        contractOwner = _contractOwner;
+        withdrawWallet = _withdrawWallet;
     }
 
     function _baseURI() internal pure override returns (string memory) {
-        return "http://localhost:3005/nft/spot";
+        return "https://nft.thetabillboard.com/spot";
     }
 
     function tokenURI(uint tokenId) public view override returns (string memory) {
         Spot storage spot = spots[tokenId];
         return string(abi.encodePacked(
             _baseURI(),
+            "-", Strings.toString(tokenId),
             "-", Strings.toString(spot.x),
             "-", Strings.toString(spot.y),
             "-", Strings.toString(spot.width),
@@ -38,8 +39,7 @@ contract OneMio721 is ERC721 {
         uint height,
         string title,
         string image,
-        string link,
-        bool nsfw
+        string link
     );
 
     uint public constant weiPixelPrice = 100000; // 100000000000000000; // 0.1 Tfuel
@@ -48,7 +48,7 @@ contract OneMio721 is ERC721 {
 
     bool[50][50] public grid; // grid of taken spots
 
-    // can withdraw the funds and set NSFW status of spots.
+    // can withdraw the funds
     address contractOwner;
 
     address payable withdrawWallet;
@@ -62,8 +62,6 @@ contract OneMio721 is ERC721 {
         string title;
         string image;
         string link;
-
-        bool nsfw; // I will set this if necessary
     }
     struct SpotWithOwner {
         Spot spot;
@@ -115,16 +113,7 @@ contract OneMio721 is ERC721 {
         spot.image = image;
         spot.link = link;
 
-        emit BillboardPublish(tokenId, msg.sender, spot.x, spot.y, spot.width, spot.height, spot.title, spot.image, spot.link, spot.nsfw);
-    }
-
-    // Set NSFW status for a specific spot.
-    function setNsfw(uint tokenId, bool nsfw) public {
-        require(msg.sender == contractOwner);
-        Spot storage spot = spots[tokenId];
-        spot.nsfw = nsfw;
-
-        emit BillboardPublish(tokenId, ERC721.ownerOf(tokenId), spot.x, spot.y, spot.width, spot.height, spot.title, spot.image, spot.link, spot.nsfw);
+        emit BillboardPublish(tokenId, msg.sender, spot.x, spot.y, spot.width, spot.height, spot.title, spot.image, spot.link);
     }
 
     // withdraw allows the owner to transfer out the balance of the contract.

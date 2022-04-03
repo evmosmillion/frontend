@@ -1,5 +1,6 @@
 import { useState } from 'react';
 import { Rnd } from 'react-rnd';
+import Head from 'next/head';
 import styles from './Home.module.scss';
 import { ethers } from 'ethers';
 import Tooltip from './Tooltip';
@@ -50,7 +51,6 @@ export default function Home() {
         title,
         image: imageUrl,
         link: linkUrl,
-        nsfw: false,
         owner: connection.status === 'connected' ? connection.address : '-',
         _index: editIndex,
     };
@@ -151,6 +151,11 @@ export default function Home() {
 
     return (
         <div className={styles.container}>
+            <Head>
+                <title>ThetaBillboard.com</title>
+                <meta name="description" content="TODO" />
+                <link rel="icon" href="/favicon.ico" />
+            </Head>
             <div className={styles.topbar}>
                 <div className={styles.left}>
                     <div>{spotInfo}</div>
@@ -185,7 +190,7 @@ export default function Home() {
                     <table>
                         <tbody>
                             {spot._index !== -1 && <tr>
-                                <th>NFT tokenId:</th>
+                                <th>NFT TokenId:</th>
                                 <td>{spot._index}</td>
                             </tr>}
                             <tr>

@@ -1,0 +1,42 @@
+.container {
+    margin: 30px auto 30px;
+    width: 1060px;
+    padding: 30px;
+    background: #f3f3f3;
+    font-size: 14px;
+
+    h1 {
+        font-size: 20px;
+        margin: 0;
+    }
+    p {
+        margin: 0 0 8px 0;
+    }
+}
+
+.preview {
+    display: flex;
+    margin: 30px 0 0 0;
+
+    .image {
+        flex: 1 1 40%;
+
+        img {
+            width: 100%;
+            box-shadow: 1px 1px 2px 0 rgba(0, 0, 0, 0.5);
+        }
+    }
+    .text {
+        flex: 1 1 60%;
+        padding-left: 30px;
+    }
+    th {
+        text-align: left;
+        vertical-align: top;
+        font-weight: 500;
+    }
+    td {
+        padding-left: 20px;
+        text-align: justify;
+    }
+}

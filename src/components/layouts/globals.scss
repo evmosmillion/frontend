@@ -7,6 +7,7 @@ html, body {
         Ubuntu, Cantarell, Fira Sans, Droid Sans, Helvetica Neue, sans-serif;
     background: #ccc;
     scroll-behavior: smooth;
+    color: #222;
 }
 
 a {
@@ -32,5 +33,19 @@ button {
     &:hover, &:active {
         background-color: #dadada;
         text-decoration: none;
+    }
+}
+
+p {
+    margin: 0 0 8px 0;
+    text-align: justify;
+}
+
+ul {
+    margin: 5px 0 0 0;
+    padding: 0 25px;
+
+    li {
+        list-style-type: square;
     }
 }

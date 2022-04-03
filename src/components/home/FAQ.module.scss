@@ -2,16 +2,12 @@
 .faq {
     margin: 20px 0;
     display: flex;
-    font-size: 14px;
+    font-size: 13px;
 
     h2 {
-        font-size: 120%;
+        font-size: 13px;
         font-weight: bold;
         margin: 10px 0 0 0;
-    }
-
-    p {
-        margin: 0 0 5px 0;
     }
 }
 
@@ -23,5 +19,5 @@
 }
 .right {
     padding: 0 0 10px 20px;
-    border-left: 1px solid #333;
+    border-left: 1px solid #bbb;
 }
