@@ -8,6 +8,7 @@ import useConnection from '../../hooks/useConnection';
 import LoadingIndicator from './LoadingIndicator';
 import contract from '../../hooks/contractInteraction';
 import Spots from './Spots';
+import FAQ from './FAQ';
 
 export const SPACE_WIDTH = 20;
 const PRICE_STRING = '1';
@@ -25,7 +26,7 @@ function resizeStyle(top?: number, right?: number, bottom?: number, left?: numbe
 }
 
 export default function Home() {
-    const { grid, spots } = useGrid();
+    const { grid, spots, receivedSpots, totalSpots, pixelsUsed } = useGrid();
     const [connection, connect] = useConnection();
     const [dim, setDim] = useState({ x: 0, y: 0, width: 0, height: 0 });
     const [buying, setBuying] = useState(false);
@@ -125,11 +126,35 @@ export default function Home() {
 
     const isEditing = (editIndex !== -1);
 
+    let spotInfo: JSX.Element | string;
+    if (totalSpots === -1) {
+        spotInfo = 'Loading information from blockchain...';
+    } else if (receivedSpots === totalSpots) {
+        spotInfo = <>Available: {(1_000_000 - pixelsUsed).toLocaleString('en')} pixels / Sold: {pixelsUsed.toLocaleString('en')} pixels</>;
+    } else {
+        spotInfo = `Downloading spots... ${receivedSpots}/${totalSpots}`;
+    }
+
+    let connectInfo: JSX.Element;
+    if (connection.status === 'connected') {
+        connectInfo = <div className={styles.connected}>
+            <strong>Connected:</strong> {connection.address.slice(0, 5)}...{connection.address.slice(-5)}
+            <div className={styles.balance}>Balance: {connection.balance.toLocaleString('en', { maximumFractionDigits: 3 })} TFUEL</div>
+        </div>
+    } else {
+        connectInfo = <div className={styles.explain}>
+            <h1>Theta Billboard</h1>
+            1,000,000 pixels for sale. 1 TFUEL per pixel.<br />
+            Data is stored in the Theta blockchain. <a href="#faq">More info</a>
+        </div>
+    }
+
     return (
         <div className={styles.container}>
             <div className={styles.topbar}>
                 <div className={styles.left}>
-                    {connection.status === 'connected' && <>
+                    <div>{spotInfo}</div>
+                    {connection.status === 'connected' && <div className={styles.manage}>
                         Manage your spots: {mySpots.length === 0
                         ? "You don't own any spots yet."
                         : <select size={1} onChange={(ev) => selectSpot(ev.target.value)} value={editIndex}>
@@ -138,15 +163,10 @@ export default function Home() {
                                 {s.width * SPACE_WIDTH}x{s.height * SPACE_WIDTH} at ({s.x * SPACE_WIDTH},{s.y * SPACE_WIDTH})
                             </option>)}
                         </select>}
-                    </>}
-                </div>
-                <div className={styles.connect}>{connectionContent}</div>
-                <div className={styles.right}>
-                    {connection.status === 'connected' && <div className={styles.connected}>
-                        <strong>Connected:</strong> {connection.address.slice(0, 5)}...{connection.address.slice(-5)}
-                        <div className={styles.balance}>Balance: {connection.balance.toLocaleString('en', { maximumFractionDigits: 3 })} TFUEL</div>
                     </div>}
                 </div>
+                <div className={styles.connect}>{connectionContent}</div>
+                <div className={styles.right}>{connectInfo}</div>
             </div>
             <div className={styles.grid}>
                 <Spots
@@ -257,6 +277,7 @@ export default function Home() {
                     </Tooltip>
                 </Rnd>}
             </div>
+            <FAQ />
         </div>
     )
 }

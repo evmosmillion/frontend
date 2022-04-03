@@ -1,9 +1,9 @@
 import { BigNumber, ethers } from "ethers";
 import abi from "./abi";
 import { getGlobalState, setGlobalState } from "./globalState";
-import { addSpot, Spot, SpotPlace } from "./useGrid";
+import { addSpot, setSpotsCount, Spot, SpotPlace } from "./useGrid";
 
-const CONTRACT_ADDRESS = '0x1D45Aa0C3F7952A514077d2f5401A5325662eFc9';
+export const CONTRACT_ADDRESS = '0x1D45Aa0C3F7952A514077d2f5401A5325662eFc9';
 
 function getContract() {
     const connection = getGlobalState('connection');
@@ -33,6 +33,7 @@ const contractInteraction = {
         const contract = new ethers.Contract(CONTRACT_ADDRESS, abi, provider);
         // const contract = getContract();
         const spotsLength = (await contract.getSpotsLength() as BigNumber).toNumber();
+        setSpotsCount(spotsLength);
 
         // load the data in parallel
         for (let i = 0; i < spotsLength; i += 1) {
@@ -49,16 +50,29 @@ const contractInteraction = {
                     owner: spotWithOwner.owner,
                     _index: i,
                 });
-            })
+            });
+            // const spotWithOwner = await contract.getSpot(i);
+            // addSpot({
+            //     x: spotWithOwner.spot.x,
+            //     y: spotWithOwner.spot.y,
+            //     width: spotWithOwner.spot.width,
+            //     height: spotWithOwner.spot.height,
+            //     title: spotWithOwner.spot.title,
+            //     image: spotWithOwner.spot.image,
+            //     link: spotWithOwner.spot.link,
+            //     nsfw: spotWithOwner.spot.nsfw,
+            //     owner: spotWithOwner.owner,
+            //     _index: i,
+            // });
         }
     },
 };
 
-setTimeout(() => {
+setTimeout(() => { // TODO put this into useEffect
     if (typeof window === 'undefined') {
         return;
     }
-    contractInteraction.gatherSpots();
+    // contractInteraction.gatherSpots();
 }, 1);
 
 

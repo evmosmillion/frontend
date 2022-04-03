@@ -43,7 +43,6 @@ class Tooltip extends Component<Props> {
 
         ReactDOM.render(typeof content === 'string' ? <>{content}</> : content, portalElement);
         
-        // detect size of tooltip
         const { pageX, pageY } = event;
         this.setTooltipPosition(-10000, -10000);
 
@@ -78,8 +77,6 @@ class Tooltip extends Component<Props> {
 
     componentWillUnmount() {
         if (portalElement) {
-            // we actually only need to hide if the current element is reponsible for the tooltip
-            // but this way is good enough for now...
             portalElement.classList.add(styles.hidden);
         }
     }

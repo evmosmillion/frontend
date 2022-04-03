@@ -123,6 +123,9 @@
         text-align: right;
     }
 }
+.manage {
+    margin-top: 5px;
+}
 .connect {
     text-align: center;
 }
@@ -136,5 +139,18 @@
     .balance {
         font-size: 80%;
     }
+}
+.explain {
+    font-size: 12px;
+    h1 {
+        font-size: 100%;
+        margin: 0;
+        padding: 0;
+    }
+    background: #ddd;
+    border: 1px solid #ddd;
+    display: inline-block;
+    padding: 6px 10px;
+    text-align: center;
 }
 

@@ -1,0 +1,24 @@
+
+.faq {
+    margin: 20px 0;
+    display: flex;
+    font-size: 14px;
+
+    h2 {
+        font-size: 120%;
+        font-weight: bold;
+        margin: 10px 0 0 0;
+    }
+
+    p {
+        margin: 0 0 5px 0;
+    }
+}
+
+.left, .right {
+    flex: 1 1 50%;
+    padding: 0 20px 10px 20px;
+}
+.right {
+    border-left: 1px solid #333;
+}

@@ -8,6 +8,9 @@ interface GlobalState {
     info: {
         grid: Array<Array<boolean>>;
         spots: Spot[];
+        receivedSpots: number;
+        totalSpots: number;
+        pixelsUsed: number;
     },
     connection: ConnectState;
 }
@@ -22,6 +25,9 @@ const { useGlobalState, setGlobalState, getGlobalState } = createGlobalState<Glo
     info: {
         grid,
         spots,
+        receivedSpots: 0,
+        totalSpots: -1, // no information yet
+        pixelsUsed: 0,
     },
     connection: {
         status: 'disconnected',
