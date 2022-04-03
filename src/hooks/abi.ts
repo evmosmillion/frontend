@@ -1,6 +1,17 @@
 export default `[
 	{
-		"inputs": [],
+		"inputs": [
+			{
+				"internalType": "address",
+				"name": "_contractOwner",
+				"type": "address"
+			},
+			{
+				"internalType": "address payable",
+				"name": "_withdrawWallet",
+				"type": "address"
+			}
+		],
 		"stateMutability": "nonpayable",
 		"type": "constructor"
 	},
@@ -89,27 +100,27 @@ export default `[
 			},
 			{
 				"indexed": false,
-				"internalType": "uint256",
+				"internalType": "uint8",
 				"name": "x",
-				"type": "uint256"
+				"type": "uint8"
 			},
 			{
 				"indexed": false,
-				"internalType": "uint256",
+				"internalType": "uint8",
 				"name": "y",
-				"type": "uint256"
+				"type": "uint8"
 			},
 			{
 				"indexed": false,
-				"internalType": "uint256",
+				"internalType": "uint8",
 				"name": "width",
-				"type": "uint256"
+				"type": "uint8"
 			},
 			{
 				"indexed": false,
-				"internalType": "uint256",
+				"internalType": "uint8",
 				"name": "height",
-				"type": "uint256"
+				"type": "uint8"
 			},
 			{
 				"indexed": false,
@@ -132,7 +143,7 @@ export default `[
 			{
 				"indexed": false,
 				"internalType": "bool",
-				"name": "nsfw",
+				"name": "update",
 				"type": "bool"
 			}
 		],
@@ -253,24 +264,6 @@ export default `[
 			}
 		],
 		"name": "setApprovalForAll",
-		"outputs": [],
-		"stateMutability": "nonpayable",
-		"type": "function"
-	},
-	{
-		"inputs": [
-			{
-				"internalType": "uint256",
-				"name": "tokenId",
-				"type": "uint256"
-			},
-			{
-				"internalType": "bool",
-				"name": "nsfw",
-				"type": "bool"
-			}
-		],
-		"name": "setNsfw",
 		"outputs": [],
 		"stateMutability": "nonpayable",
 		"type": "function"
@@ -444,11 +437,6 @@ export default `[
 								"internalType": "string",
 								"name": "link",
 								"type": "string"
-							},
-							{
-								"internalType": "bool",
-								"name": "nsfw",
-								"type": "bool"
 							}
 						],
 						"internalType": "struct OneMio721.Spot",
@@ -619,11 +607,6 @@ export default `[
 				"internalType": "string",
 				"name": "link",
 				"type": "string"
-			},
-			{
-				"internalType": "bool",
-				"name": "nsfw",
-				"type": "bool"
 			}
 		],
 		"stateMutability": "view",
