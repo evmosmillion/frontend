@@ -4,7 +4,7 @@ import Head from 'next/head';
 import styles from './Home.module.scss';
 import { ethers } from 'ethers';
 import Tooltip from './Tooltip';
-import useGrid, { Spot, SpotPlace } from '../../hooks/useGrid';
+import useGrid, { Spot } from '../../hooks/useGrid';
 import useConnection from '../../hooks/useConnection';
 import LoadingIndicator from './LoadingIndicator';
 import contract from '../../hooks/contractInteraction';
@@ -12,8 +12,7 @@ import Spots from './Spots';
 import FAQ from './FAQ';
 
 export const SPACE_WIDTH = 20;
-const PRICE_STRING = '1';
-const PRICE_WEI = ethers.utils.parseEther(PRICE_STRING);
+const PRICE_WEI = ethers.utils.parseEther('0.001'); // 0.001 -> 1000000000000000
 
 function resizeStyle(top?: number, right?: number, bottom?: number, left?: number) {
     return {

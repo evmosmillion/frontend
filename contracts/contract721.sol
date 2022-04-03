@@ -43,7 +43,7 @@ contract OneMio721 is ERC721 {
         bool update
     );
 
-    uint public constant weiPixelPrice = 100000; // 100000000000000000; // 0.1 Tfuel
+    uint public constant weiPixelPrice = 1000000000000000; // 0.001 -> 1000000000000000
 
     uint public constant pixelsPerCell = 400; // 20x20
 
