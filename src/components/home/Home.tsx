@@ -143,7 +143,7 @@ export default function Home() {
         </div>
     } else {
         connectInfo = <div className={styles.explain}>
-            <h1>Theta Billboard</h1>
+            <h1>ThetaMillion.com</h1>
             1,000,000 pixels for sale. 1 TFUEL per pixel.<br />
             Data is stored in the Theta blockchain.<br/>
             Each created spot is a minted NFT. <a href="#faq">More info</a>

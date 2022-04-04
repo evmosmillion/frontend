@@ -16,7 +16,7 @@ function getMetamaskContract() {
     return new ethers.Contract(CONTRACT_ADDRESS, abi, provider.getSigner());
 }
 
-const EVENT_ABI = 'BillboardPublish(uint256,address,uint8,uint8,uint8,uint8,string,string,string,bool)';
+const EVENT_ABI = 'ThetaMillionPublish(uint256,address,uint8,uint8,uint8,uint8,string,string,string,bool)';
 const ABI_DECODE = ['uint8','uint8','uint8','uint8','string','string','string','bool'];
 
 function waitForEvent() {

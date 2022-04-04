@@ -5,7 +5,7 @@ import "@openzeppelin/contracts@4.5.0/token/ERC721/ERC721.sol";
 
 contract OneMio721 is ERC721 {
 
-    constructor(address _contractOwner, address payable _withdrawWallet) ERC721("ThetaBillboard", "TBB") {
+    constructor(address _contractOwner, address payable _withdrawWallet) ERC721("ThetaMillion", "TM") {
         require(_contractOwner != address(0));
         require(_withdrawWallet != address(0));
         
@@ -14,7 +14,7 @@ contract OneMio721 is ERC721 {
     }
 
     function _baseURI() internal pure override returns (string memory) {
-        return "https://nft.thetabillboard.com/spot";
+        return "https://nft.thetamillion.com/spot";
     }
 
     function tokenURI(uint tokenId) public view override returns (string memory) {
@@ -30,7 +30,7 @@ contract OneMio721 is ERC721 {
         ));
     }
 
-    event BillboardPublish (
+    event ThetaMillionPublish (
         uint indexed id,
         address indexed owner,
         uint8 x,
@@ -103,7 +103,7 @@ contract OneMio721 is ERC721 {
         
         _mint(msg.sender, tokenId);
 
-        emit BillboardPublish(tokenId, msg.sender, x, y, width, height, title, image, link, false);
+        emit ThetaMillionPublish(tokenId, msg.sender, x, y, width, height, title, image, link, false);
 
         return tokenId;
     }
@@ -115,7 +115,7 @@ contract OneMio721 is ERC721 {
         spot.image = image;
         spot.link = link;
 
-        emit BillboardPublish(tokenId, msg.sender, spot.x, spot.y, spot.width, spot.height, spot.title, spot.image, spot.link, true);
+        emit ThetaMillionPublish(tokenId, msg.sender, spot.x, spot.y, spot.width, spot.height, spot.title, spot.image, spot.link, true);
     }
 
     // withdraw allows the owner to transfer out the balance of the contract.

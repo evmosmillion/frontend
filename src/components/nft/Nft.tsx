@@ -73,7 +73,7 @@ export default function NftExample() {
                         contract.tokenURI(edition),
                         contract.ownerOf(edition),
                     ]);
-                    url = url.replace('https://nft.thetabillboard.com/', 'http://localhost:4005/');
+                    url = url.replace('https://nft.thetamillion.com/', 'http://localhost:4005/');
                 }
                 const mdRequest = await fetch(url);
                 const data = await mdRequest.json();
@@ -105,9 +105,9 @@ export default function NftExample() {
     return (
         <div className={styles.container}>
             <Head>
-                <title>ThetaBillboard.com NFT</title>
+                <title>ThetaMillion.com NFT</title>
             </Head>
-            <p><Link href="/">Show me the billboard</Link></p>
+            <p><Link href="/">Show me the million pixels!</Link></p>
             <h1>{metadata.name}</h1>
             <p className={styles.nomargin}>{metadata.isExample
             ? <small>This is an example NFT.</small>

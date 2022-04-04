@@ -18,7 +18,7 @@ export default function FAQ() {
         </div>
         <div className={styles.right}>
             <h2>Every spot is also an NFT!</h2>
-            <p>The contract implements the NFT (Non-Fungible Token) Standard. That means every bought spot is also an NFT. By buying a spot you are actually creating/minting an NFT. The NFT contains information about where the spot is located in the image and other information. Only the owner of the NFT can change the content of the spot. When you transfer your NFT to someone else, that person gains control over the spot in the billboard above.</p>
+            <p>The contract implements the NFT (Non-Fungible Token) Standard. That means every bought spot is also an NFT. By buying a spot you are actually creating/minting an NFT. The NFT contains information about where the spot is located in the image and other information. Only the owner of the NFT can change the content of the spot. When you transfer your NFT to someone else, that person gains control over the spot in the grid above.</p>
 
             <p>If you want to see what the NFT looks like, check out this <Link href="/nft_#example">NFT example</Link>.</p>
 
