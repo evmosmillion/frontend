@@ -9,7 +9,7 @@ import { CONTRACT_ADDRESS } from '../../hooks/contractInteraction';
 import LoadingIndicator from '../home/LoadingIndicator';
 import styles from './Nft.module.scss';
 
-const exampleUrl = 'http://localhost:4005/spot-37-11-9-8-5.json';
+const exampleUrl = 'https://nft.thetamillion.com/spot-37-11-9-8-5.json';
 
 interface Metadata {
     isExample?: boolean;
@@ -73,7 +73,6 @@ export default function NftExample() {
                         contract.tokenURI(edition),
                         contract.ownerOf(edition),
                     ]);
-                    url = url.replace('https://nft.thetamillion.com/', 'http://localhost:4005/');
                 }
                 const mdRequest = await fetch(url);
                 const data = await mdRequest.json();
