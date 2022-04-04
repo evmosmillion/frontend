@@ -3,7 +3,7 @@ import abi from "./abi";
 import { getGlobalState } from "./globalState";
 import { updateSpot, setSpotsCount, Spot } from "./useGrid";
 
-export const CONTRACT_ADDRESS = '0x8394290a08Ca7CD0aCA9745A7414809aB7F27451';
+export const CONTRACT_ADDRESS = '0xBFf0F3825ae748E6a5342a3b23D3AdCd0bfADe9f';
 
 const staticProvider = new ethers.providers.JsonRpcBatchProvider('https://eth-rpc-api-testnet.thetatoken.org/rpc');
 
