@@ -145,7 +145,8 @@ export default function Home() {
         connectInfo = <div className={styles.explain}>
             <h1>Theta Billboard</h1>
             1,000,000 pixels for sale. 1 TFUEL per pixel.<br />
-            Data is stored in the Theta blockchain. <a href="#faq">More info</a>
+            Data is stored in the Theta blockchain.<br/>
+            Each created spot is a minted NFT. <a href="#faq">More info</a>
         </div>
     }
 
@@ -165,11 +166,6 @@ export default function Home() {
 
     return (
         <div className={styles.container}>
-            <Head>
-                <title>ThetaBillboard.com</title>
-                <meta name="description" content="TODO" />
-                <link rel="icon" href="/favicon.ico" />
-            </Head>
             <div className={styles.topbar}>
                 <div className={styles.left}>
                     <div>{spotInfo}</div>
@@ -205,7 +201,7 @@ export default function Home() {
                         <tbody>
                             {spot._index !== -1 && <tr>
                                 <th>NFT TokenId:</th>
-                                <td>{spot._index}</td>
+                                <td>{spot._index} (<a href={`/nft_#${spot._index}`} target="_blank">NFT data</a>)</td>
                             </tr>}
                             <tr>
                                 <th>Size:</th>
@@ -221,7 +217,7 @@ export default function Home() {
                             </tr>
                             <tr>
                                 <th>Cost:</th>
-                                <td>{ isEditing ? 'You only pay for gas to update the content.' : `${costText} TFUEL (+ gas)`}</td>
+                                <td>{ isEditing ? 'To update the content you only pay for gas.' : `${costText} TFUEL (+ gas)`}</td>
                             </tr>
                             <tr className={styles.lineAbove}>
                                 <th>Title:</th>
@@ -245,7 +241,7 @@ export default function Home() {
                     : (isOverlapping
                         ? <div className={styles.belowTable}>You cannot buy this spot. <br />You are overlapping other spots!</div>
                         : (enoughFunds
-                            ? <button onClick={contractBuy}>Buy</button>
+                            ? <button onClick={contractBuy}>Buy / Mint NFT</button>
                             : <div className={styles.belowTable}>You cannot buy this spot. <br />You don't have enough funds to buy this spot!</div>)
                         )
                     }
