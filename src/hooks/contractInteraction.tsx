@@ -100,12 +100,5 @@ const contractInteraction = {
     },
 };
 
-setTimeout(() => { // TODO put this into useEffect
-    if (typeof window === 'undefined') {
-        return;
-    }
-    contractInteraction.gatherSpots();
-}, 1);
-
 
 export default contractInteraction;

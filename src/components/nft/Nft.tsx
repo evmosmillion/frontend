@@ -1,5 +1,6 @@
 
 import { ethers } from 'ethers';
+import Head from 'next/head';
 import Link from 'next/link';
 import { useRouter } from 'next/router';
 import { useEffect, useState } from 'react';
@@ -103,6 +104,9 @@ export default function NftExample() {
 
     return (
         <div className={styles.container}>
+            <Head>
+                <title>ThetaBillboard.com NFT</title>
+            </Head>
             <p><Link href="/">Show me the billboard</Link></p>
             <h1>{metadata.name}</h1>
             <p className={styles.nomargin}>{metadata.isExample

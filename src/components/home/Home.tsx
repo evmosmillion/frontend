@@ -295,7 +295,7 @@ export default function Home() {
                         />
                     </Tooltip>
                 </Rnd>}
-                {isLoading && <div className={styles.loading}>
+                {(isLoading || totalSpots === -1 || (receivedSpots === 0 && totalSpots > 0)) && <div className={styles.loading}>
                     <LoadingIndicator width={600} height={300} />
                 </div>}
             </div>
