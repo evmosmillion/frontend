@@ -175,7 +175,7 @@ export default function Home() {
                         : <select size={1} onChange={(ev) => selectSpot(ev.target.value)} value={editIndex}>
                             <option value={-1}>Select spot</option>
                             {mySpots.map(s => <option value={s._index} key={s._index}>
-                                {s.width * SPACE_WIDTH}x{s.height * SPACE_WIDTH} at ({s.x * SPACE_WIDTH},{s.y * SPACE_WIDTH})
+                                {s.title ? s.title : '(No title)'} - {s.width * SPACE_WIDTH}x{s.height * SPACE_WIDTH} at ({s.x * SPACE_WIDTH},{s.y * SPACE_WIDTH})
                             </option>)}
                         </select>}
                     </div>}

@@ -5,8 +5,7 @@ import '../components/layouts/globals.scss';
 import contractInteraction from '../hooks/contractInteraction';
 
 export default function MyApp({ Component, pageProps }: AppProps) {
-    useEffect(() => { // TODO put this into useEffect
-        console.log('running');
+    useEffect(() => {
         if (typeof window === 'undefined') {
             return;
         }
