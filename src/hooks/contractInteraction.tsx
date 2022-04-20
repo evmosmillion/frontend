@@ -2,6 +2,7 @@ import { BigNumber, ethers } from "ethers";
 import abi from "./abi";
 import { getGlobalState } from "./globalState";
 import { updateSpot, setSpotsCount, Spot } from "./useGrid";
+import pLimit from 'p-limit';
 
 export const CONTRACT_ADDRESS = '0xBFf0F3825ae748E6a5342a3b23D3AdCd0bfADe9f';
 
@@ -26,7 +27,7 @@ function waitForEvent() {
     }
     return new Promise<void>((resolve) => {
         const filter = {
-            CONTRACT_ADDRESS,
+            address: CONTRACT_ADDRESS,
             topics: [ethers.utils.id(EVENT_ABI)],
         };
         staticProvider.on(
@@ -48,6 +49,9 @@ function waitForEvent() {
         );
     });
 }
+
+const PARALLEL_SPOT_DOWNLOADS = 10;
+const spotGatherPlimit = pLimit(PARALLEL_SPOT_DOWNLOADS);
 
 const contractInteraction = {
 
@@ -83,7 +87,8 @@ const contractInteraction = {
 
         // load the data in parallel
         for (let i = 0; i < spotsLength; i += 1) {
-            contract.getSpot(i).then((spotWithOwner: any) => {
+            spotGatherPlimit(async () => {
+                const spotWithOwner = await contract.getSpot(i);
                 updateSpot({
                     x: spotWithOwner.spot.x,
                     y: spotWithOwner.spot.y,
