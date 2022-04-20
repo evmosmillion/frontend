@@ -225,11 +225,11 @@ export default function Home() {
                             </tr>
                             <tr>
                                 <th>Image URL:</th>
-                                <td><input type="text" value={imageUrl} onChange={(ev) => setImageUrl(ev.target.value)} /></td>
+                                <td><input type="text" value={imageUrl} onChange={(ev) => setImageUrl(ev.target.value)} placeholder="https://..." /></td>
                             </tr>
                             <tr>
                                 <th>Link URL:</th>
-                                <td><input type="text" value={linkUrl} onChange={(ev) => setLinkUrl(ev.target.value)} /></td>
+                                <td><input type="text" value={linkUrl} onChange={(ev) => setLinkUrl(ev.target.value)} placeholder="https://..." /></td>
                             </tr>
                             <tr>
                                 <td colSpan={2}>You can change these values anytime for free (only gas costs).</td>
