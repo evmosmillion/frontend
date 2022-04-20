@@ -43,7 +43,7 @@ contract OneMio721 is ERC721 {
         bool update
     );
 
-    uint public constant weiPixelPrice = 1000000000000000; // 0.001 -> 1000000000000000
+    uint public constant weiPixelPrice = 10000000000000; // 0.00001 -> 10000000000000
 
     uint public constant pixelsPerCell = 400; // 20x20
 
@@ -81,7 +81,7 @@ contract OneMio721 is ERC721 {
     }
 
     function buySpot(uint8 x, uint8 y, uint8 width, uint8 height, string memory title, string memory image, string memory link) public payable returns (uint tokenId) {
-        uint cost = width * height * pixelsPerCell * weiPixelPrice;
+        uint cost = uint256(width) * uint256(height) * pixelsPerCell * weiPixelPrice;
         require(cost > 0);
         require(msg.value >= cost);
 
