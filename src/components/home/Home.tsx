@@ -32,8 +32,8 @@ export default function Home() {
     const [buying, setBuying] = useState(false);
     const [isInfoVisible, setIsInfoVisible] = useState(true);
     const [title, setTitle] = useState('');
-    const [imageUrl, setImageUrl] = useState('');
-    const [linkUrl, setLinkUrl] = useState('');
+    const [imageUrl, setImageUrl] = useState('https://');
+    const [linkUrl, setLinkUrl] = useState('https://');
     const [editIndex, setEditIndex] = useState(-1);
     const [isLoading, setIsLoading] = useState(false);
 
@@ -81,8 +81,8 @@ export default function Home() {
     function selectSpot(idStr: string) {
         if (idStr === '-1') { // unset
             setTitle('');
-            setImageUrl('');
-            setLinkUrl('');
+            setImageUrl('https://');
+            setLinkUrl('https://');
             setEditIndex(-1);
             return;
         }
@@ -107,8 +107,8 @@ export default function Home() {
             height: 200,
         });
         setTitle('');
-        setImageUrl('');
-        setLinkUrl('');
+        setImageUrl('https://');
+        setLinkUrl('https://');
         setEditIndex(-1);
         setBuying(true);
     }
@@ -224,12 +224,12 @@ export default function Home() {
                                 <td><input type="text" value={title} onChange={(ev) => setTitle(ev.target.value)} /></td>
                             </tr>
                             <tr>
-                                <th>Image URL:</th>
-                                <td><input type="text" value={imageUrl} onChange={(ev) => setImageUrl(ev.target.value)} placeholder="https://..." /></td>
+                                <th><Tooltip element="span" content="Should start with https://">Image URL:</Tooltip></th>
+                                <td><input type="text" value={imageUrl} onChange={(ev) => setImageUrl(ev.target.value)} /></td>
                             </tr>
                             <tr>
-                                <th>Link URL:</th>
-                                <td><input type="text" value={linkUrl} onChange={(ev) => setLinkUrl(ev.target.value)} placeholder="https://..." /></td>
+                                <th><Tooltip element="span" content="Should start with https://">Link URL:</Tooltip></th>
+                                <td><input type="text" value={linkUrl} onChange={(ev) => setLinkUrl(ev.target.value)} /></td>
                             </tr>
                             <tr>
                                 <td colSpan={2}>You can change these values anytime for free (only gas costs).</td>
