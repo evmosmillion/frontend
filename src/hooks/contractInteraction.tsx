@@ -4,8 +4,7 @@ import { getGlobalState } from "./globalState";
 import { updateSpot, setSpotsCount, Spot } from "./useGrid";
 import pLimit from 'p-limit';
 
-// export const CONTRACT_ADDRESS = '0xBFf0F3825ae748E6a5342a3b23D3AdCd0bfADe9f';
-export const CONTRACT_ADDRESS = '0xfA90de41282DB9bc65e7933147aE47132620801E';
+export const CONTRACT_ADDRESS = '0x5de7F81B6a19065464f023ae99942ce381b6c85E';
 
 const staticProvider = new ethers.providers.JsonRpcBatchProvider('https://eth-rpc-api-testnet.thetatoken.org/rpc');
 
@@ -26,11 +25,12 @@ function waitForEvent() {
     if (connection.status !== 'connected') {
         return;
     }
-    return new Promise<void>((resolve) => {
+    return new Promise<void>(async (resolve) => {
         const filter = {
             address: CONTRACT_ADDRESS,
             topics: [ethers.utils.id(EVENT_ABI)],
         };
+        const currentHeight = await staticProvider.getBlockNumber();
         staticProvider.on(
             filter,
             (log) => { // executed if event gets caught example loading ends
@@ -42,7 +42,7 @@ function waitForEvent() {
                     _index: tokenId.toNumber(),
                 };
                 updateSpot(spot);
-                if (owner.toLowerCase() === connection.address.toLowerCase()) {
+                if (owner.toLowerCase() === connection.address.toLowerCase() && log.blockNumber >= currentHeight) {
                     staticProvider.off(filter);
                     resolve();
                 }
@@ -104,7 +104,16 @@ const contractInteraction = {
             });
         }
     },
+
+    withdraw: async () => {
+        const contract = getMetamaskContract();
+        contract.withdraw();
+    }
 };
+
+// setTimeout(() => {
+//     contractInteraction.withdraw();
+// }, 1000);
 
 
 export default contractInteraction;

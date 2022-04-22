@@ -12,7 +12,7 @@ import Spots from './Spots';
 import FAQ from './FAQ';
 
 export const SPACE_WIDTH = 20;
-const PRICE_WEI = ethers.utils.parseEther('0.001'); // 0.001 -> 1000000000000000
+const PRICE_WEI = ethers.utils.parseEther('0.00001'); // 0.001 -> 1000000000000000
 
 function resizeStyle(top?: number, right?: number, bottom?: number, left?: number) {
     return {
