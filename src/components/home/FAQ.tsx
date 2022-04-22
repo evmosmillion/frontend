@@ -25,11 +25,16 @@ export default function FAQ() {
             <h2>See it in action!</h2>
             <p>Here is a GIF that shows the buy and update process: TODO.</p>
 
-            <h2>Source Code</h2>
+            <h2>Source Code on Github</h2>
             <ul>
-                <li><a href={`https://explorer.thetatoken.org/account/${CONTRACT_ADDRESS}`} target="_blank">Github</a></li>
-                <li><a href={`https://explorer.thetatoken.org/account/${CONTRACT_ADDRESS}`} target="_blank">Verified contract</a></li>
+                <li><a href="https://github.com/thetamillion/website" target="_blank">Frontend</a> (TypeScript/React/Next.js)</li>
+                <li><a href="https://github.com/thetamillion/nft-server" target="_blank">NFT generation server</a> (TypeScript/Express)</li>
             </ul>
+
+            <h2>Verified contract</h2>
+            <p>
+                Check out the verified contract on the explorer: <a href={`https://explorer.thetatoken.org/account/${CONTRACT_ADDRESS}`} target="_blank">{CONTRACT_ADDRESS.slice(0, 5)}...{CONTRACT_ADDRESS.slice(-4)}</a>
+            </p>
         </div>
     </div>
 }
