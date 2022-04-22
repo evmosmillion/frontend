@@ -4,7 +4,7 @@ import { getGlobalState, setGlobalState } from "./globalState";
 import { updateSpot, setSpotsCount, Spot } from "./useGrid";
 import pLimit from 'p-limit';
 
-export const CONTRACT_ADDRESS = '0x5de7F81B6a19065464f023ae99942ce381b6c85E';
+export const CONTRACT_ADDRESS = '0x038BB06C2224151151f07D15b8A1A8bBAe49fd07';
 
 const staticProvider = new ethers.providers.JsonRpcBatchProvider('https://eth-rpc-api-testnet.thetatoken.org/rpc');
 
@@ -105,13 +105,12 @@ const contractInteraction = {
                 doneCount += 1;
                 if (doneCount === spotsLength) {
                     const info = getGlobalState('info');
-                    setGlobalState('info', {
-                        ...info,
-                        isGridLoading: false,
-                    });
+                    setGlobalState('info', { ...info, isGridLoading: false });
                 }
             });
         }
+        const info = getGlobalState('info');
+        setGlobalState('info', { ...info, isGridLoading: false });
     },
 
     withdraw: async () => {
