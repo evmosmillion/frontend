@@ -132,7 +132,7 @@ export default function Home() {
     } else if (receivedSpots === totalSpots) {
         spotInfo = <>Available: {(1_000_000 - pixelsUsed).toLocaleString('en')} pixels / Sold: {pixelsUsed.toLocaleString('en')} pixels</>;
     } else {
-        spotInfo = `Downloading spots... ${receivedSpots}/${totalSpots}`;
+        spotInfo = <strong>Downloading spots... {receivedSpots}/{totalSpots}</strong>;
     }
 
     let connectInfo: JSX.Element;

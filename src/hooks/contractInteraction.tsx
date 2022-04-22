@@ -111,8 +111,10 @@ const contractInteraction = {
                 }
             });
         }
-        const info = getGlobalState('info');
-        setGlobalState('info', { ...info, isGridLoading: false });
+        if (spotsLength === 0) {
+            const info = getGlobalState('info');
+            setGlobalState('info', { ...info, isGridLoading: false });
+        }
     },
 
     withdraw: async () => {
