@@ -23,7 +23,7 @@ interface Metadata {
     }[];
 }
 
-const staticProvider = new ethers.providers.JsonRpcBatchProvider('https://eth-rpc-api-testnet.thetatoken.org/rpc');
+const staticProvider = new ethers.providers.JsonRpcBatchProvider('https://eth-rpc-api.thetatoken.org/rpc');
 
 export default function NftExample() {
     const [path, setPath] = useState('');
