@@ -24,7 +24,7 @@ export function setSpotsCount(spotCount: number) {
 }
 
 export function updateSpot(spot: Spot) {
-    let { spots, grid, receivedSpots, pixelsUsed, totalSpots } = getGlobalState('info');
+    let { spots, grid, receivedSpots, pixelsUsed, totalSpots, isGridLoading } = getGlobalState('info');
     if (!spots[spot._index]) {
         receivedSpots += 1;
         pixelsUsed += (spot.height * spot.width) * (SPACE_WIDTH * SPACE_WIDTH);
@@ -38,7 +38,7 @@ export function updateSpot(spot: Spot) {
             grid[spot.x+i][spot.y+k] = true;
         }
     }
-    setGlobalState('info', { spots: [...spots], grid, receivedSpots, pixelsUsed, totalSpots });
+    setGlobalState('info', { spots: [...spots], grid, receivedSpots, pixelsUsed, totalSpots, isGridLoading });
 }
 
 export default function useGrid() {

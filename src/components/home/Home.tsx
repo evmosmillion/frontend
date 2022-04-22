@@ -26,7 +26,7 @@ function resizeStyle(top?: number, right?: number, bottom?: number, left?: numbe
 }
 
 export default function Home() {
-    const { grid, spots, receivedSpots, totalSpots, pixelsUsed } = useGrid();
+    const { grid, spots, receivedSpots, totalSpots, pixelsUsed, isGridLoading } = useGrid();
     const [connection, connect] = useConnection();
     const [dim, setDim] = useState({ x: 0, y: 0, width: 0, height: 0 });
     const [buying, setBuying] = useState(false);
@@ -295,7 +295,7 @@ export default function Home() {
                         />
                     </Tooltip>
                 </Rnd>}
-                {(isLoading || totalSpots === -1 || (receivedSpots === 0 && totalSpots > 0)) && <div className={styles.loading}>
+                {(isLoading || totalSpots === -1 || isGridLoading) && <div className={styles.loading}>
                     <LoadingIndicator width={600} height={300} />
                 </div>}
             </div>

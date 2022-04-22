@@ -11,6 +11,7 @@ interface GlobalState {
         receivedSpots: number;
         totalSpots: number;
         pixelsUsed: number;
+        isGridLoading: boolean;
     },
     connection: ConnectState;
 }
@@ -28,6 +29,7 @@ const { useGlobalState, setGlobalState, getGlobalState } = createGlobalState<Glo
         receivedSpots: 0,
         totalSpots: -1, // no information yet
         pixelsUsed: 0,
+        isGridLoading: true,
     },
     connection: {
         status: 'disconnected',

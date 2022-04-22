@@ -1,6 +1,6 @@
 import { BigNumber, ethers } from "ethers";
 import abi from "./abi";
-import { getGlobalState } from "./globalState";
+import { getGlobalState, setGlobalState } from "./globalState";
 import { updateSpot, setSpotsCount, Spot } from "./useGrid";
 import pLimit from 'p-limit';
 
@@ -51,7 +51,7 @@ function waitForEvent() {
     });
 }
 
-const PARALLEL_SPOT_DOWNLOADS = 10;
+const PARALLEL_SPOT_DOWNLOADS = 50;
 const spotGatherPlimit = pLimit(PARALLEL_SPOT_DOWNLOADS);
 
 const contractInteraction = {
@@ -87,6 +87,7 @@ const contractInteraction = {
         setSpotsCount(spotsLength);
 
         // load the data in parallel
+        let doneCount = 0;
         for (let i = 0; i < spotsLength; i += 1) {
             spotGatherPlimit(async () => {
                 const spotWithOwner = await contract.getSpot(i);
@@ -101,6 +102,14 @@ const contractInteraction = {
                     owner: spotWithOwner.owner,
                     _index: i,
                 });
+                doneCount += 1;
+                if (doneCount === spotsLength) {
+                    const info = getGlobalState('info');
+                    setGlobalState('info', {
+                        ...info,
+                        isGridLoading: false,
+                    });
+                }
             });
         }
     },
