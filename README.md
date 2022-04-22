@@ -1,13 +1,6 @@
 
-# TODO
-- [x] Check: If domain name does not start with 'http*' add 'https://' or make user aware
-- [x] Show title in "Select box"
-- [x] Check bug: When the selected area is too big, the onchain action fails
+# [ThetaMillion](https://www.thetamillion.com/)
 
-# Hackathon
-- [ ] Create image or video?
-- [ ] 
+Remember the The Million Dollar Homepage? You could buy an ad spot for $1 per pixel. This is a smilar concept but decentralized on the Theta blockchain. You pay 1 TFUEL (the currency on the network) for each pixel and your data is stored and loaded from the Theta Blockchain. This decentralized application (dApp) does not have a traditional server.
 
-# Later
-- [ ] z-index of loading animation on home must be bigger than the info/buy spot
-- [ ] Add ipfs protocol
+Goto [www.thetamillion.com](https://www.thetamillion.com/)
