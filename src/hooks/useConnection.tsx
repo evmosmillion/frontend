@@ -45,7 +45,7 @@ async function getProvider(silent: boolean) {
     // }]);
 
     // TESTNET
-    if (chainId !== '0x16d') {
+    if (chainId !== '0x169') {
         if (!silent) {
             alert('Your Metamask extension is connected to the wrong chain. Make sure you are connected to the Theta Mainnet.');
         }
@@ -53,7 +53,7 @@ async function getProvider(silent: boolean) {
     }
 
     await provider.send('wallet_addEthereumChain', [{
-        chainId: '0x16d',
+        chainId: '0x169',
         chainName: 'Theta Testnet',
         nativeCurrency: { name: "Theta Fuel", symbol: "TFUEL", decimals: 18 },
         rpcUrls: ["https://eth-rpc-api-testnet.thetatoken.org/rpc"],

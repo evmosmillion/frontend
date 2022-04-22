@@ -4,9 +4,11 @@ import { getGlobalState, setGlobalState } from "./globalState";
 import { updateSpot, setSpotsCount, Spot } from "./useGrid";
 import pLimit from 'p-limit';
 
-export const CONTRACT_ADDRESS = '0x038BB06C2224151151f07D15b8A1A8bBAe49fd07';
+// export const CONTRACT_ADDRESS = '0x038BB06C2224151151f07D15b8A1A8bBAe49fd07'; // testnet
+export const CONTRACT_ADDRESS = '0xe45610E578d4eb626121f55A61aB346A619B7d99';
 
-const staticProvider = new ethers.providers.JsonRpcBatchProvider('https://eth-rpc-api-testnet.thetatoken.org/rpc');
+// const staticProvider = new ethers.providers.JsonRpcBatchProvider('https://eth-rpc-api-testnet.thetatoken.org/rpc');
+const staticProvider = new ethers.providers.JsonRpcBatchProvider('https://eth-rpc-api.thetatoken.org/rpc');
 
 function getMetamaskContract() {
     const connection = getGlobalState('connection');
