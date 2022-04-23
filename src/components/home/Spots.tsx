@@ -38,7 +38,7 @@ export default React.memo(function Spots({ spots, editIndex, editLinkUrl, editTi
                 element='img'
                 props={{
                     src: (editIndex === e._index ? editImageUrl : e.image),
-                    className: `${styles.cell} ${editIndex === e._index ? styles.hl : ''}`,
+                    className: `${styles.cell} ${editIndex === e._index ? styles.hl : ''} ${e.width === 1 && e.height === 1 ? styles.mini : ''}`,
                     style: {
                         left: `${e.x * SPACE_WIDTH}px`,
                         top: `${e.y * SPACE_WIDTH}px`,
