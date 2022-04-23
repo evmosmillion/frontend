@@ -14,6 +14,7 @@ interface GlobalState {
         isGridLoading: boolean;
     },
     connection: ConnectState;
+    shownSpots: number; // load them one by one
 }
 
 const spots: Spot[] = [];
@@ -34,6 +35,7 @@ const { useGlobalState, setGlobalState, getGlobalState } = createGlobalState<Glo
     connection: {
         status: 'disconnected',
     },
+    shownSpots: 0,
 });
 
 export { useGlobalState, setGlobalState, getGlobalState };

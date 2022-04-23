@@ -2,7 +2,8 @@ import { Spot } from "../../hooks/useGrid";
 import { SPACE_WIDTH } from "./Home";
 import Tooltip from "./Tooltip";
 import styles from './Home.module.scss';
-import React from 'react';
+import React, { useEffect, useState } from 'react';
+import { useGlobalState } from "../../hooks/globalState";
 
 interface Props {
     spots: Spot[];
@@ -14,8 +15,20 @@ interface Props {
 
 // memorized, so that it's only re-rendered when necessary
 export default React.memo(function Spots({ spots, editIndex, editLinkUrl, editTitle, editImageUrl }: Props) {
+    const [shownSpots, setShownSpots] = useGlobalState('shownSpots');
+
+    useEffect(() => {
+        if (shownSpots >= spots.length) {
+            return;
+        }
+        const timer = setTimeout(() => {
+            setShownSpots(shownSpots + 1);
+        }, 20);
+        return () => clearTimeout(timer);
+    }, [shownSpots, spots.length]);
+
     return <>
-        {spots.map((e, i) => <a
+        {spots.slice(0, shownSpots).map((e, i) => <a
             key={i}
             href={editIndex === e._index ? editLinkUrl : e.link}
             target='_blank'
