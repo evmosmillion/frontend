@@ -53,7 +53,7 @@ function waitForEvent() {
     });
 }
 
-const PARALLEL_SPOT_DOWNLOADS = 50;
+const PARALLEL_SPOT_DOWNLOADS = 500;
 const spotGatherPlimit = pLimit(PARALLEL_SPOT_DOWNLOADS);
 
 const contractInteraction = {
