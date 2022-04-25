@@ -15,6 +15,9 @@ export default function FAQ() {
             
             <h2>What happens when all spots are gone?</h2>
             <p>The space is limited. You can only buy spots in multiples of 20x20 pixels. That means in total there are only 50x50=2,500 spots available at maximum. After all spots are gone, the contract will not allow any new spots. But each spot comes with an NFT. That means you can transfer your spot or even sell it to others.</p>
+
+            <h2>My image is not showing up. How do I do this?</h2>
+            <p>Make sure you are actually using an image and not a website that contains an image. An example that <strong>won't work</strong> is this: <a href="https://imgur.com/Zbjhl65" target="_blank">https://imgur.com/Zbjhl65</a> This is a website and not an image, you <strong>don't</strong> want to use that as image URL! To get the correct image URL you need to right-click on the image and press "Copy image address". This will return this: <a href="https://i.imgur.com/Zbjhl65.png" target="_blank">https://i.imgur.com/Zbjhl65.png</a> which is the actual image URL which you can use.</p>
         </div>
         <div className={styles.right}>
             <h2>Every spot is also an NFT!</h2>
