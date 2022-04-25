@@ -32,6 +32,12 @@ export function updateSpot(spot: Spot) {
             totalSpots = receivedSpots;
         }
     }
+    if (spot.image === 'https://tenor.com/view/elmo-fire-burn-flame-gif-5042503') {
+        spot.image = 'https://c.tenor.com/Jl-mymXzhywAAAAC/elmo-fire.gif';
+    } else if (spot.image === 'https://0x338866f8ba75bb9d7a00502e11b099a2636c2c18/4656/') {
+        spot.image = 'https://lh3.googleusercontent.com/OXNMiPbdMmQmTBr10b-7nDgPTXtBQ-iTSdtEu6HVEGyXdSPd1FlCbk8SghRvWYq8O1N5BKViO_K3BruNfG00evcG9E0RV3NkO6shUw';
+    }
+
     spots[spot._index] = spot;
     for(let i = 0; i < spot.width; i += 1) {
         for(let k = 0; k < spot.height; k += 1) {
