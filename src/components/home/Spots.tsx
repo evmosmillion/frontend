@@ -23,22 +23,49 @@ export default React.memo(function Spots({ spots, editIndex, editLinkUrl, editTi
         }
         const timer = setTimeout(() => {
             setShownSpots(shownSpots + 1);
-        }, 20);
+        }, 10);
         return () => clearTimeout(timer);
     }, [shownSpots, spots.length]);
 
     return <>
-        {spots.slice(0, shownSpots).map((e, i) => <a
-            key={i}
-            href={editIndex === e._index ? editLinkUrl : e.link}
-            target='_blank'
-        >
-            <Tooltip
-                content={editIndex === e._index ? editTitle : e.title}
+        {spots.slice(0, shownSpots).map((e, i) => {
+            let href = (editIndex === e._index ? editLinkUrl : e.link);
+            if (href === 'https://') {
+                href = '';
+            }
+            const title = (editIndex === e._index ? editTitle : e.title).trim();
+
+            let tooltipText: JSX.Element | string = '';
+            if (href !== '' || title !== '') {
+                let tooltipTitle = title === '' ? null : <>{title}<br/></>;
+                let hrefToShow = href;
+                if (hrefToShow.length > 80) {
+                    hrefToShow = hrefToShow.slice(0, 80) + '...';
+                }
+                let tooltipLink = href === '' ? <em className={styles.muted}>(no link)</em> : <span className={styles.muted}>{hrefToShow}</span>;
+                tooltipText = <>{tooltipTitle}{tooltipLink}</>;
+            } 
+
+            let classNames = [styles.cell];
+            if (editIndex === e._index) {
+                classNames.push(styles.hl);
+            }
+            if (e.width === 1 && e.height === 1) {
+                classNames.push(styles.mini);
+            }
+
+            let src = editIndex === e._index ? editImageUrl : e.image;
+            if (src === 'https://' || src === '') {
+                src = '/images/transparent.png';
+                classNames.push(styles.noimage);
+            }
+
+            const tooltip = <Tooltip
+                content={tooltipText}
                 element='img'
                 props={{
-                    src: (editIndex === e._index ? editImageUrl : e.image),
-                    className: `${styles.cell} ${editIndex === e._index ? styles.hl : ''} ${e.width === 1 && e.height === 1 ? styles.mini : ''}`,
+                    src,
+                    className: classNames.join(' '),
                     style: {
                         left: `${e.x * SPACE_WIDTH}px`,
                         top: `${e.y * SPACE_WIDTH}px`,
@@ -46,8 +73,14 @@ export default React.memo(function Spots({ spots, editIndex, editLinkUrl, editTi
                         height: `${e.height * SPACE_WIDTH}px`,
                         backgroundColor: '#' + e.owner.slice(-6),
                     },
+                    "data-tokenid": e._index,
+                    alt: '',
                 }} 
-            />
-        </a>)}
+            />;
+            if (!href) {
+                return <span key={i}>{tooltip}</span>;
+            }
+            return <a key={i} href={href} target='_blank'>{tooltip}</a>;
+        })}
     </>
 });

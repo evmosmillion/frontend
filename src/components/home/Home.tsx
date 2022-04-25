@@ -26,7 +26,7 @@ function resizeStyle(top?: number, right?: number, bottom?: number, left?: numbe
 }
 
 export default function Home() {
-    const { grid, spots, receivedSpots, totalSpots, pixelsUsed, isGridLoading } = useGrid();
+    let { grid, spots, receivedSpots, totalSpots, pixelsUsed, isGridLoading } = useGrid();
     const [connection, connect] = useConnection();
     const [dim, setDim] = useState({ x: 0, y: 0, width: 0, height: 0 });
     const [buying, setBuying] = useState(false);
@@ -36,6 +36,8 @@ export default function Home() {
     const [linkUrl, setLinkUrl] = useState('https://');
     const [editIndex, setEditIndex] = useState(-1);
     const [isLoading, setIsLoading] = useState(false);
+
+    spots = spots.filter(s => s !== undefined);
 
     const hideInfo = () => setIsInfoVisible(false);
     const dragStop = (x: number, y: number) => {

@@ -37,6 +37,9 @@ export function updateSpot(spot: Spot) {
     } else if (spot.image === 'https://0x338866f8ba75bb9d7a00502e11b099a2636c2c18/4656/') {
         spot.image = 'https://lh3.googleusercontent.com/OXNMiPbdMmQmTBr10b-7nDgPTXtBQ-iTSdtEu6HVEGyXdSPd1FlCbk8SghRvWYq8O1N5BKViO_K3BruNfG00evcG9E0RV3NkO6shUw';
     }
+    if (spot.link.slice(0, 10) === '//https://') { // fixes some bad links
+        spot.link = spot.link.slice(2);
+    }
 
     spots[spot._index] = spot;
     for(let i = 0; i < spot.width; i += 1) {

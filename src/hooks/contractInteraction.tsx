@@ -3,6 +3,7 @@ import abi from "./abi";
 import { getGlobalState, setGlobalState } from "./globalState";
 import { updateSpot, setSpotsCount, Spot } from "./useGrid";
 import pLimit from 'p-limit';
+// import devData from "./devData";
 
 // export const CONTRACT_ADDRESS = '0x038BB06C2224151151f07D15b8A1A8bBAe49fd07'; // testnet
 export const CONTRACT_ADDRESS = '0xe45610E578d4eb626121f55A61aB346A619B7d99';
@@ -53,9 +54,6 @@ function waitForEvent() {
     });
 }
 
-const PARALLEL_SPOT_DOWNLOADS = 500;
-const spotGatherPlimit = pLimit(PARALLEL_SPOT_DOWNLOADS);
-
 const contractInteraction = {
 
     buySpot: async (spot: Spot, value: BigNumber) => {
@@ -79,19 +77,19 @@ const contractInteraction = {
     },
 
     gatherSpots: async () => {
-        // const DEMO_SPOTS = [{"x":35,"y":3,"width":4,"height":4,"title":"Hacker News","image":"https://news.ycombinator.com/y18.gif","link":"https://news.ycombinator.com/","nsfw":false,"owner":"0x8e9c3513B5F86811477fc1e21826Cebb4DBaD25F","_index":0},{"x":22,"y":4,"width":13,"height":4,"title":"Theta Wallet","image":"https://wallet.thetatoken.org/img/logo/theta_wallet_logo@2x.png","link":"https://wallet.thetatoken.org/","nsfw":false,"owner":"0x8e9c3513B5F86811477fc1e21826Cebb4DBaD25F","_index":1},{"x":11,"y":11,"width":13,"height":4,"title":"New Google Logo","image":"https://upload.wikimedia.org/wikipedia/commons/thumb/3/3e/Google_2011_logo.png/155px-Google_2011_logo.png","link":"https://www.google.com/123","nsfw":false,"owner":"0x8ad096fe4c1011E66692A341dBC4eeA2718A916b","_index":2},{"x":0,"y":0,"width":3,"height":3,"title":"test","image":"https://s3.us-east-2.amazonaws.com/assets.thetatoken.org/tokens/theta.png","link":"asdf123","nsfw":false,"owner":"0x8e9c3513B5F86811477fc1e21826Cebb4DBaD25F","_index":3},{"x":9,"y":0,"width":3,"height":2,"title":"testasdf","image":"","link":"aaaaaaaaaa","nsfw":false,"owner":"0x8e9c3513B5F86811477fc1e21826Cebb4DBaD25F","_index":4}];
+        // const DEMO_SPOTS = devData;
         // setSpotsCount(DEMO_SPOTS.length);
         // DEMO_SPOTS.forEach(e => updateSpot(e));
+        // setGlobalState('info', { ...getGlobalState('info'), isGridLoading: false });
 
         const contract = new ethers.Contract(CONTRACT_ADDRESS, abi, staticProvider);
-        // const contract = getContract();
         const spotsLength = (await contract.getSpotsLength() as BigNumber).toNumber();
         setSpotsCount(spotsLength);
 
         // load the data in parallel
         let doneCount = 0;
         for (let i = 0; i < spotsLength; i += 1) {
-            spotGatherPlimit(async () => {
+            (async (i) => {
                 const spotWithOwner = await contract.getSpot(i);
                 updateSpot({
                     x: spotWithOwner.spot.x,
@@ -107,9 +105,13 @@ const contractInteraction = {
                 doneCount += 1;
                 if (doneCount === spotsLength) {
                     const info = getGlobalState('info');
+                    // console.log(JSON.stringify(info.spots));
                     setGlobalState('info', { ...info, isGridLoading: false });
                 }
-            });
+            })(i);
+            if (i % 50 === 0 && i !== 0) {
+                await new Promise((resolve) => setTimeout(resolve, 2000));
+            }
         }
         if (spotsLength === 0) {
             const info = getGlobalState('info');
