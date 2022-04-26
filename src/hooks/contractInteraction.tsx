@@ -2,7 +2,7 @@ import { BigNumber, ethers } from "ethers";
 import abi from "./abi";
 import { getGlobalState, setGlobalState } from "./globalState";
 import { updateSpot, setSpotsCount, Spot } from "./useGrid";
-import devData from "./devData";
+// import devData from "./devData";
 
 // export const CONTRACT_ADDRESS = '0x038BB06C2224151151f07D15b8A1A8bBAe49fd07'; // testnet
 export const CONTRACT_ADDRESS = '0xe45610E578d4eb626121f55A61aB346A619B7d99';
