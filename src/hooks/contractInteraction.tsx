@@ -82,7 +82,7 @@ const contractInteraction = {
         // setGlobalState('info', { ...getGlobalState('info'), isGridLoading: false });
 
         const contract = new ethers.Contract(CONTRACT_ADDRESS, abi, staticProvider);
-        const spotsLength = (await contract.getSpotsLength() as BigNumber).toNumber();
+        const spotsLength = 571; // (await contract.getSpotsLength() as BigNumber).toNumber();
         setSpotsCount(spotsLength);
 
         // load the data in parallel
@@ -112,10 +112,10 @@ const contractInteraction = {
                 }
             })(i);
         }
-        if (spotsLength === 0) {
-            const info = getGlobalState('info');
-            setGlobalState('info', { ...info, isGridLoading: false });
-        }
+        // if (spotsLength === 0) {
+        //     const info = getGlobalState('info');
+        //     setGlobalState('info', { ...info, isGridLoading: false });
+        // }
     },
 
     withdraw: async () => {
