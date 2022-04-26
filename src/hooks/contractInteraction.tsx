@@ -2,8 +2,7 @@ import { BigNumber, ethers } from "ethers";
 import abi from "./abi";
 import { getGlobalState, setGlobalState } from "./globalState";
 import { updateSpot, setSpotsCount, Spot } from "./useGrid";
-import pLimit from 'p-limit';
-// import devData from "./devData";
+import devData from "./devData";
 
 // export const CONTRACT_ADDRESS = '0x038BB06C2224151151f07D15b8A1A8bBAe49fd07'; // testnet
 export const CONTRACT_ADDRESS = '0xe45610E578d4eb626121f55A61aB346A619B7d99';
@@ -89,6 +88,9 @@ const contractInteraction = {
         // load the data in parallel
         let doneCount = 0;
         for (let i = 0; i < spotsLength; i += 1) {
+            if (i % 50 === 0 && i !== 0) {
+                await new Promise((resolve) => setTimeout(resolve, 2000));
+            }
             (async (i) => {
                 const spotWithOwner = await contract.getSpot(i);
                 updateSpot({
@@ -109,9 +111,6 @@ const contractInteraction = {
                     setGlobalState('info', { ...info, isGridLoading: false });
                 }
             })(i);
-            if (i % 50 === 0 && i !== 0) {
-                await new Promise((resolve) => setTimeout(resolve, 2000));
-            }
         }
         if (spotsLength === 0) {
             const info = getGlobalState('info');
