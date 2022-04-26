@@ -60,27 +60,32 @@ export default React.memo(function Spots({ spots, editIndex, editLinkUrl, editTi
                 classNames.push(styles.noimage);
             }
 
-            const tooltip = <Tooltip
-                content={tooltipText}
-                element='img'
-                props={{
-                    src,
-                    className: classNames.join(' '),
-                    style: {
-                        left: `${e.x * SPACE_WIDTH}px`,
-                        top: `${e.y * SPACE_WIDTH}px`,
-                        width: `${e.width * SPACE_WIDTH}px`,
-                        height: `${e.height * SPACE_WIDTH}px`,
-                        backgroundColor: '#' + e.owner.slice(-6),
-                    },
-                    "data-tokenid": e._index,
-                    alt: '',
-                }} 
-            />;
-            if (!href) {
-                return <span key={i}>{tooltip}</span>;
+            let element = 'span';
+            const props: any = {
+                className: classNames.join(' '),
+                style: {
+                    left: `${e.x * SPACE_WIDTH}px`,
+                    top: `${e.y * SPACE_WIDTH}px`,
+                    width: `${e.width * SPACE_WIDTH}px`,
+                    height: `${e.height * SPACE_WIDTH}px`,
+                    backgroundColor: '#' + e.owner.slice(-6),
+                },
+                'data-tokenid': e._index,
+            };
+            if (href) {
+                element = 'a';
+                props.href = href;
+                props.target = '_blank';
             }
-            return <a key={i} href={href} target='_blank'>{tooltip}</a>;
+
+            return <Tooltip
+                key={i}
+                content={tooltipText}
+                element={element}
+                props={props} 
+            >
+                <img src={src} alt="" />
+            </Tooltip>;
         })}
     </>
 });
