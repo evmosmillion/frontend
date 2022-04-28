@@ -1,6 +1,5 @@
 import { useState } from 'react';
 import { Rnd } from 'react-rnd';
-import Head from 'next/head';
 import styles from './Home.module.scss';
 import { ethers } from 'ethers';
 import Tooltip from './Tooltip';
@@ -10,6 +9,7 @@ import LoadingIndicator from './LoadingIndicator';
 import contract from '../../hooks/contractInteraction';
 import Spots from './Spots';
 import FAQ from './FAQ';
+// import mappedImages from '../../data/mappedImages.json';
 
 export const SPACE_WIDTH = 20;
 const PRICE_WEI = ethers.utils.parseEther('1'); // 1 -> 1000000000000000000
@@ -120,11 +120,16 @@ export default function Home() {
         connectionContent = <button onClick={connect}>Connect to MetaMask wallet</button>;
     } else if (connection.status === 'waiting') {
         connectionContent = <LoadingIndicator width={100} height={50} />;
-    } else if (buying) {
+    } else {
+        connectionContent = <>
+            All Spots have been minted!<br/>
+            <strong><a href="https://beta.opentheta.io/collection/thetamillion" target="_blank">Buy a spot on OpenTheta</a></strong>
+        </>;
+    }/* else if (buying) {
         connectionContent = <button onClick={() => setBuying(false)}>Cancel</button>;
     } else {
         connectionContent = <button onClick={buy}>Place a spot!</button>;
-    }
+    }*/
 
     const isEditing = (editIndex !== -1);
 
@@ -146,7 +151,7 @@ export default function Home() {
     } else {
         connectInfo = <div className={styles.explain}>
             <h1>ThetaMillion.com</h1>
-            1,000,000 pixels for sale. 1 TFUEL per pixel.<br />
+            1,000,000 pixels sold! 1 TFUEL per pixel.<br />
             Data is stored in the Theta blockchain.<br/>
             Each created spot is a minted NFT. <a href="#faq">More info</a>
         </div>
