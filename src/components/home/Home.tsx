@@ -9,7 +9,6 @@ import LoadingIndicator from './LoadingIndicator';
 import contract from '../../hooks/contractInteraction';
 import Spots from './Spots';
 import FAQ from './FAQ';
-// import mappedImages from '../../data/mappedImages.json';
 
 export const SPACE_WIDTH = 20;
 const PRICE_WEI = ethers.utils.parseEther('1'); // 1 -> 1000000000000000000
