@@ -28,6 +28,8 @@ export default function FAQ() {
 
             <p>If you want to see what an NFT looks like, check out this <Link href="/nft_#example">NFT example</Link>.</p>
 
+            <p>To see all owners and which spots are for sale, see the <Link href="/list">list of owners</Link>.</p>
+
             <h2>Theta Hackathon</h2>
             <p>This is my entry for the Theta Q1 2022 Hackathon. See my entry and more information on the <a href="https://devpost.com/software/a-ax42yu" target="_blank">hackathon page</a>.</p>
 
@@ -37,7 +39,7 @@ export default function FAQ() {
                 <li><a href="https://github.com/thetamillion/nft-server" target="_blank">NFT generation server</a> (TypeScript/Express)</li>
             </ul>
 
-            <h2>Verified contract</h2>
+            <h2>Verified Contract</h2>
             <p>
                 Check out the verified contract on the explorer: <a href={`https://explorer.thetatoken.org/account/${CONTRACT_ADDRESS}`} target="_blank">{CONTRACT_ADDRESS.slice(0, 5)}...{CONTRACT_ADDRESS.slice(-4)}</a>
             </p>
