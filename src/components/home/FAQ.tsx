@@ -28,7 +28,7 @@ export default function FAQ() {
 
             <p>If you want to see what an NFT looks like, check out this <Link href="/nft_#example">NFT example</Link>.</p>
 
-            <p>To see all owners and which spots are for sale, see the <Link href="/list">list of owners</Link>.</p>
+            <p>To see all owners and which spots are for sale, see the <Link href="/owners">list of owners</Link>.</p>
 
             <h2>Theta Hackathon</h2>
             <p>This is my entry for the Theta Q1 2022 Hackathon. See my entry and more information on the <a href="https://devpost.com/software/a-ax42yu" target="_blank">hackathon page</a>.</p>
