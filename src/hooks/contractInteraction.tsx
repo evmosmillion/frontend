@@ -2,13 +2,11 @@ import { BigNumber, ethers } from "ethers";
 import abi from "./abi";
 import { getGlobalState, setGlobalState } from "./globalState";
 import { updateSpot, setSpotsCount, Spot } from "./useGrid";
-// import devData from "./devData";
 
-// export const CONTRACT_ADDRESS = '0x038BB06C2224151151f07D15b8A1A8bBAe49fd07'; // testnet
-export const CONTRACT_ADDRESS = '0xe45610E578d4eb626121f55A61aB346A619B7d99';
+export const CONTRACT_ADDRESS = '0xDf4c1203Ad3a998792Ab45F1F4c1c08044BC2A0b'; // testnet
 
 // const staticProvider = new ethers.providers.JsonRpcBatchProvider('https://eth-rpc-api-testnet.thetatoken.org/rpc');
-const staticProvider = new ethers.providers.JsonRpcBatchProvider('https://eth-rpc-api.thetatoken.org/rpc');
+const staticProvider = new ethers.providers.JsonRpcProvider('https://eth.bd.evmos.dev:8545');
 
 function getMetamaskContract() {
     const connection = getGlobalState('connection');
@@ -19,7 +17,7 @@ function getMetamaskContract() {
     return new ethers.Contract(CONTRACT_ADDRESS, abi, provider.getSigner());
 }
 
-const EVENT_ABI = 'ThetaMillionPublish(uint256,address,uint8,uint8,uint8,uint8,string,string,string,bool)';
+const EVENT_ABI = 'EvmosMillionPublish(uint256,address,uint8,uint8,uint8,uint8,string,string,string,bool)';
 const ABI_DECODE = ['uint8','uint8','uint8','uint8','string','string','string','bool'];
 
 function waitForEvent() {
@@ -55,6 +53,12 @@ function waitForEvent() {
 
 const contractInteraction = {
 
+    test: async () => {
+        console.log('HEREEEREEE');
+        const a = await staticProvider.getBalance('0x10DC3ab9C46d4EB65C280ab6A9CfF95BBA10Caaf');
+        console.log('result', ethers.utils.formatEther(a));
+    },
+
     buySpot: async (spot: Spot, value: BigNumber) => {
         try {
             const contract = getMetamaskContract();
@@ -82,7 +86,7 @@ const contractInteraction = {
         // setGlobalState('info', { ...getGlobalState('info'), isGridLoading: false });
 
         const contract = new ethers.Contract(CONTRACT_ADDRESS, abi, staticProvider);
-        const spotsLength = 571; // (await contract.getSpotsLength() as BigNumber).toNumber();
+        const spotsLength = (await contract.getSpotsLength() as BigNumber).toNumber();
         setSpotsCount(spotsLength);
 
         // load the data in parallel

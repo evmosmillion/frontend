@@ -11,7 +11,7 @@ import Spots from './Spots';
 import FAQ from './FAQ';
 
 export const SPACE_WIDTH = 20;
-const PRICE_WEI = ethers.utils.parseEther('1'); // 1 -> 1000000000000000000
+const PRICE_WEI = ethers.utils.parseEther('0.0000001'); // 1 -> 1000000000000000000
 
 function resizeStyle(top?: number, right?: number, bottom?: number, left?: number) {
     return {
@@ -69,7 +69,7 @@ export default function Home() {
     }
     const totalPixels = dim.width * dim.height;
     const weiValue = PRICE_WEI.mul(totalPixels);
-    const costText = ethers.utils.commify(ethers.utils.formatEther(weiValue).slice(0, -2)); // slice removes the '.0' at the end
+    const costText = ethers.utils.commify(ethers.utils.formatEther(weiValue));
     let enoughFunds = false;
     
     let mySpots: Spot[] = [];
@@ -119,16 +119,11 @@ export default function Home() {
         connectionContent = <button onClick={connect}>Connect to MetaMask wallet</button>;
     } else if (connection.status === 'waiting') {
         connectionContent = <LoadingIndicator width={100} height={50} />;
-    } else {
-        connectionContent = <>
-            All Spots have been minted!<br/>
-            <strong><a href="https://beta.opentheta.io/collection/thetamillion" target="_blank">Buy a spot on OpenTheta</a></strong>
-        </>;
-    }/* else if (buying) {
+    } else if (buying) {
         connectionContent = <button onClick={() => setBuying(false)}>Cancel</button>;
     } else {
         connectionContent = <button onClick={buy}>Place a spot!</button>;
-    }*/
+    }
 
     const isEditing = (editIndex !== -1);
 
@@ -145,13 +140,13 @@ export default function Home() {
     if (connection.status === 'connected') {
         connectInfo = <div className={styles.connected}>
             <strong>Connected:</strong> {connection.address.slice(0, 5)}...{connection.address.slice(-5)}
-            <div className={styles.balance}>Balance: {connection.balance.toLocaleString('en', { maximumFractionDigits: 3 })} TFUEL</div>
+            <div className={styles.balance}>Balance: {connection.balance.toLocaleString('en', { maximumFractionDigits: 3 })} EVMOS</div>
         </div>
     } else {
         connectInfo = <div className={styles.explain}>
-            <h1>ThetaMillion.com</h1>
-            1,000,000 pixels sold! 1 TFUEL per pixel.<br />
-            Data is stored in the Theta blockchain.<br/>
+            <h1>EvmosMillion.com</h1>
+            1,000,000 pixels for sale!<br />
+            Data is stored in the Evmos blockchain.<br/>
             Each created spot is a minted NFT. <a href="#faq">More info</a>
         </div>
     }
@@ -223,7 +218,7 @@ export default function Home() {
                             </tr>
                             <tr>
                                 <th>Cost:</th>
-                                <td>{ isEditing ? 'To update the content you only pay for gas.' : `${costText} TFUEL (+ gas)`}</td>
+                                <td>{ isEditing ? 'To update the content you only pay for gas.' : `${costText} EVMOS (+ gas)`}</td>
                             </tr>
                             <tr className={styles.lineAbove}>
                                 <th>Title:</th>

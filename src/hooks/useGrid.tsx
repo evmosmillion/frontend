@@ -1,6 +1,5 @@
 import { SPACE_WIDTH } from "../components/home/Home";
 import { getGlobalState, setGlobalState, useGlobalState } from "./globalState";
-import fixes from './fixes';
 
 export interface SpotPlace {
     x: number;
@@ -34,9 +33,6 @@ export function updateSpot(spot: Spot) {
     }
     // Some users mixed up https:// or something similar
     // In case the intention was clear, I fixed these images
-    if (fixes[spot.image]) {
-        spot.image = fixes[spot.image];
-    }
     if (spot.link.slice(0, 10) === '//https://') { // fixes some bad links
         spot.link = spot.link.slice(2);
     }

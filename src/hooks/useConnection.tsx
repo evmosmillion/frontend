@@ -32,19 +32,8 @@ async function getProvider(silent: boolean) {
     
     const provider = new ethers.providers.Web3Provider((globalThis as any).ethereum);
     const chainId = await provider.send('eth_chainId', []);
-    // if (chainId !== '0x169') {
-    //     throw new Error('Wrong chain connected.');
-    // }
 
-    // await provider.send('wallet_addEthereumChain', [{
-    //     chainId: '0x169',
-    //     chainName: 'Theta Mainnet',
-    //     nativeCurrency: { name: "Theta Fuel", symbol: "TFUEL", decimals: 18 },
-    //     rpcUrls: ["https://eth-rpc-api.thetatoken.org/rpc"],
-    //     blockExplorerUrls: ["https://explorer.thetatoken.org/"],
-    // }]);
-
-    if (chainId !== '0x169') {
+    if (chainId !== '0x2328') {
         if (!silent) {
             alert('Your Metamask extension is connected to the wrong chain. Make sure you are connected to the Theta Mainnet.');
         }
@@ -52,11 +41,11 @@ async function getProvider(silent: boolean) {
     }
 
     await provider.send('wallet_addEthereumChain', [{
-        chainId: '0x169',
-        chainName: 'Theta Mainnet',
-        nativeCurrency: { name: "Theta Fuel", symbol: "TFUEL", decimals: 18 },
-        rpcUrls: ["https://eth-rpc-api.thetatoken.org/rpc"],
-        blockExplorerUrls: ["https://explorer.thetatoken.org/"],
+        chainId: '0x2328',
+        chainName: 'Evmos Testnet',
+        nativeCurrency: { name: "TEVMOS", symbol: "TEVMOS", decimals: 18 },
+        rpcUrls: ["https://eth.bd.evmos.dev:8545/"],
+        blockExplorerUrls: ["https://evm.evmos.dev/"],
     }]);
 
     return provider;

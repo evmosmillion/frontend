@@ -4,7 +4,6 @@ import Tooltip from "./Tooltip";
 import styles from './Home.module.scss';
 import React, { useEffect, useState } from 'react';
 import { useGlobalState } from "../../hooks/globalState";
-import mappedImages from '../../data/mappedImages.json';
 
 interface Props {
     spots: Spot[];
@@ -58,14 +57,6 @@ export default React.memo(function Spots({ spots, editIndex, editLinkUrl, editTi
             let src = e.image;
             if (editIndex === e._index) {
                 src = editImageUrl;
-            } else {
-                // mappedImages example -> Array<['https://...super-big-image.jpg', '1.jpg'] (contains "original" -> minified version)
-                // the mapped image is only used if the image in [0] is the image that is actually given
-                // so in case the image is changed later, we won't use our version
-                const mappedImage = mappedImages[e._index];
-                if (mappedImage && mappedImage[0] === src) {
-                    src = `/spots/${mappedImage[1]}`;
-                }
             }
             if (src === 'https://' || src === '') {
                 src = '/images/transparent.png';
