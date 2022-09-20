@@ -32,12 +32,11 @@ export default function FAQ() {
             <p>To see all owners, see the <Link href="/owners">list of owners</Link>.</p>
 
             <h2>Evmos Hackathon</h2>
-            <p>This is my entry for the Evmos Momentum Hackathon. See my entry and more information on the <a href="TODO" target="_blank">hackathon page</a>.</p>
+            <p>This is my entry for the Evmos Momentum Hackathon. See my entry and more information on the <a href="https://devpost.com/software/evmosmillion" target="_blank">hackathon page</a>.</p>
 
             <h2>Source Code on Github</h2>
             <ul>
-                <li><a href="TODO" target="_blank">Frontend</a> (TypeScript/React/Next.js)</li>
-                <li><a href="TODO" target="_blank">NFT generation server</a> (TypeScript/Express)</li>
+                <li><a href="https://github.com/evmosmillion/frontend" target="_blank">Frontend</a> (TypeScript/React/Next.js)</li>
             </ul>
 
             <h2>My image is not showing up. How do I do this?</h2>

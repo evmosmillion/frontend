@@ -144,7 +144,7 @@ export default function Home() {
         </div>
     } else {
         connectInfo = <div className={styles.explain}>
-            <h1>EvmosMillion.com</h1>
+            <h1>EvmosMillion</h1>
             1,000,000 pixels for sale!<br />
             Data is stored in the Evmos blockchain.<br/>
             Each created spot is a minted NFT. <a href="#faq">More info</a>
