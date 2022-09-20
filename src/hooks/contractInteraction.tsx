@@ -5,7 +5,6 @@ import { updateSpot, setSpotsCount, Spot } from "./useGrid";
 
 export const CONTRACT_ADDRESS = '0xDf4c1203Ad3a998792Ab45F1F4c1c08044BC2A0b'; // testnet
 
-// const staticProvider = new ethers.providers.JsonRpcBatchProvider('https://eth-rpc-api-testnet.thetatoken.org/rpc');
 const staticProvider = new ethers.providers.JsonRpcProvider('https://eth.bd.evmos.dev:8545');
 
 function getMetamaskContract() {
