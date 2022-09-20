@@ -9,7 +9,7 @@ import { CONTRACT_ADDRESS } from '../../hooks/contractInteraction';
 import LoadingIndicator from '../home/LoadingIndicator';
 import styles from './Nft.module.scss';
 
-const exampleUrl = 'https://nft.thetamillion.com/spot-37-11-9-8-5.json';
+const exampleUrl = '/example-nft.json';
 
 interface Metadata {
     isExample?: boolean;
