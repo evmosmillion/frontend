@@ -35,7 +35,7 @@ async function getProvider(silent: boolean) {
 
     if (chainId !== '0x2328') {
         if (!silent) {
-            alert('Your Metamask extension is connected to the wrong chain. Make sure you are connected to the Theta Mainnet.');
+            alert('Your Metamask extension is connected to the wrong chain. Make sure you are connected to the Evmos Testnet.');
         }
         throw new Error('Wrong chain connected.');
     }
@@ -82,7 +82,7 @@ export default function useConnection() {
 
             const accounts = await provider.send('eth_requestAccounts', []) as string[];
             if (accounts.length === 0) {
-                alert('Unable to connect to account. Make sure you are on the Theta Network and have an account.');
+                alert('Unable to connect to account. Make sure you are on the Evmos Testnet Network and have an account.');
                 return;
             }
             const address = accounts[0].toLowerCase();

@@ -61,7 +61,6 @@ export default function List() {
                 <thead>
                     <tr>
                         <th>Owner</th>
-                        <th>Marketplace?</th>
                         <th>Total<br/> space</th>
                         <th>Number of<br/> NFTs</th>
                         <th>Owned NFTs (biggest spots first)</th>

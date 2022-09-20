@@ -23,7 +23,7 @@ interface Metadata {
     }[];
 }
 
-const staticProvider = new ethers.providers.JsonRpcBatchProvider('https://eth-rpc-api.thetatoken.org/rpc');
+const staticProvider = new ethers.providers.JsonRpcBatchProvider('https://eth.bd.evmos.dev:8545');
 
 export default function NftExample() {
     const [path, setPath] = useState('');
@@ -104,14 +104,14 @@ export default function NftExample() {
     return (
         <div className={styles.container}>
             <Head>
-                <title>ThetaMillion.com NFT</title>
+                <title>EvmosMillion NFT</title>
             </Head>
             <p><Link href="/">Show me the million pixels!</Link></p>
             <h1>{metadata.name}</h1>
             <p className={styles.nomargin}>{metadata.isExample
             ? <small>This is an example NFT.</small>
-            : <small>TokenId <strong>{metadata.attributes.find(e => e.trait_type === 'edition')?.value}</strong> of contract <a href={`https://explorer.thetatoken.org/account/${CONTRACT_ADDRESS}`} target="_blank">{CONTRACT_ADDRESS}</a></small>}</p>
-            <p className={styles.nomargin}><small>Owned by <a href={`https://explorer.thetatoken.org/account/${owner}`} target="_blank">{owner}</a></small></p>
+            : <small>TokenId <strong>{metadata.attributes.find(e => e.trait_type === 'edition')?.value}</strong> of contract <a href={`https://evm.evmos.dev/address/${CONTRACT_ADDRESS}`} target="_blank">{CONTRACT_ADDRESS}</a></small>}</p>
+            <p className={styles.nomargin}><small>Owned by <a href={`https://evm.evmos.dev/address/${owner}`} target="_blank">{owner}</a></small></p>
 
             <div className={styles.preview}>
                 <div className={styles.image}>
