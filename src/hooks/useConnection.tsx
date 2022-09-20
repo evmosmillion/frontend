@@ -43,8 +43,8 @@ async function getProvider(silent: boolean) {
     await provider.send('wallet_addEthereumChain', [{
         chainId: '0x2328',
         chainName: 'Evmos Testnet',
-        nativeCurrency: { name: "TEVMOS", symbol: "TEVMOS", decimals: 18 },
-        rpcUrls: ["https://eth.bd.evmos.dev:8545/"],
+        nativeCurrency: { name: "tEVMOS", symbol: "tEVMOS", decimals: 18 },
+        rpcUrls: ["https://eth.bd.evmos.dev:8545"],
         blockExplorerUrls: ["https://evm.evmos.dev/"],
     }]);
 
